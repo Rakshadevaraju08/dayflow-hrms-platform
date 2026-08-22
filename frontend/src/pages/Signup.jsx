@@ -22,13 +22,30 @@ export default function Signup() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     setError("");
+    if (!form.name.trim()) {
+      setError("Name is required.");
+      return;
+    }
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (form.password.length < 6) {
+      setError("Password must be at least 6 characters long.");
+      return;
+    }
     if (form.password !== form.confirmPassword) {
       setError("Passwords do not match.");
       return;
     }
     setLoading(true);
     try {
-      const user = await signup({ ...form, role: "HR" });
+      const user = await signup({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        password: form.password,
+        role: "HR",
+      });
       navigate(["admin", "ADMIN", "HR", "hr"].includes(user?.role) ? "/admin/dashboard" : "/dashboard");
     } catch (submitError) {
       setError(submitError?.message || "Signup failed. Please try again.");
@@ -67,7 +84,7 @@ export default function Signup() {
             ))}
 
             <button type="submit" disabled={loading} className="w-full h-11 rounded-[10px] bg-indigo hover:bg-indigo-light text-white font-semibold text-[14.5px] transition-colors disabled:opacity-60 mt-2">
-              {loading ? "Creating account..." : "Sign Up"}
+              {loading ? <span className="inline-flex items-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />Creating account...</span> : "Sign Up"}
             </button>
           </form>
 

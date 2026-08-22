@@ -10,6 +10,12 @@ export default function Login() {
   const [submitting, setSubmitting] = useState(false);
   async function handleSubmit(event) {
     event.preventDefault(); setError(''); setSubmitting(true);
+    if (!form.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+      setError('Please enter a valid email address.'); setSubmitting(false); return;
+    }
+    if (!form.password) {
+      setError('Password is required.'); setSubmitting(false); return;
+    }
     try { const user = await login(form); navigate(['HR', 'ADMIN', 'hr', 'admin'].includes(user.role) ? '/admin/dashboard' : '/dashboard'); }
     catch (submitError) { setError(submitError.message); }
     finally { setSubmitting(false); }
@@ -30,7 +36,7 @@ export default function Login() {
             <input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} className="mt-1 block w-full rounded-md border border-gray-300 p-2 shadow-sm" required />
           </div>
           <button type="submit" disabled={submitting} className="w-full flex justify-center py-2 px-4 rounded-md text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60">
-            {submitting ? 'Signing in...' : 'Sign In'}
+            {submitting ? <span className="inline-flex items-center gap-2"><span className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden="true" />Signing in...</span> : 'Sign In'}
           </button>
         </form>
         <p className="text-center text-sm text-gray-600">Need an account? <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-700">Create one</Link></p>
