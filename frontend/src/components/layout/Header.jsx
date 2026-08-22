@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 
 export function Header({ onOpenSidebar, pageTitle = "Dashboard" }) {
   const { user } = useAuth();
-  
+
   const getInitials = (name) => name ? name.charAt(0) : 'U';
 
 
@@ -28,9 +28,9 @@ export function Header({ onOpenSidebar, pageTitle = "Dashboard" }) {
         <div className="hidden md:block w-72">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-surface-400" size={18} />
-            <Input 
-              type="text" 
-              placeholder="Search employees, leaves..." 
+            <Input
+              type="text"
+              placeholder="Search employees, leaves..."
               className="pl-10 h-10 rounded-full bg-surface-50 border-transparent focus:bg-white"
             />
           </div>
