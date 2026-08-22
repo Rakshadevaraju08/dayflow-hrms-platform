@@ -8,9 +8,7 @@ const prisma = new PrismaClient({ adapter });
 const LEAVE_TYPES = ['PAID', 'SICK', 'UNPAID'];
 const LEAVE_STATUSES = ['PENDING', 'APPROVED', 'REJECTED'];
 
-// Temporary user ID for testing.
-// Pass ?userId=<User.id>. Replace this with req.user.id once auth middleware is added.
-const getCurrentUserId = (req) => req.query.userId;
+const getCurrentUserId = (req) => req.user && req.user.id;
 
 const userSelect = {
   id: true,
@@ -74,7 +72,7 @@ const getCurrentUser = async (req) => {
   const userId = getCurrentUserId(req);
 
   if (!userId) {
-    throw createHttpError('userId query parameter is required', 400);
+    throw createHttpError('Authentication required', 401);
   }
 
   if (!isValidUuid(userId)) {

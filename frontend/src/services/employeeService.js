@@ -5,8 +5,8 @@ export const employeeService = {
   /**
    * Get the current authenticated employee's profile
    */
-  getMyProfile: async (userId) => {
-    const response = await apiClient.get('/employees/me', { params: { userId } });
+  getMyProfile: async () => {
+    const response = await apiClient.get('/employees/me');
     return response.data;
   },
 
@@ -14,8 +14,8 @@ export const employeeService = {
    * Update the current authenticated employee's profile
    * @param {Object} data - Profile data to update (e.g. phone, address)
    */
-  updateMyProfile: async (data, userId) => {
-    const response = await apiClient.put('/employees/me', data, { params: { userId } });
+  updateMyProfile: async (data) => {
+    const response = await apiClient.put('/employees/me', data);
     return response.data;
   },
 

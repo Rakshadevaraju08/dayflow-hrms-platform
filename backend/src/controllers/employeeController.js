@@ -8,10 +8,7 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({ adapter });
 
-// Temporary user ID for testing
-// Pass ?userId=<User.id> to GET/PUT /api/employees/me.
-// Replace this with req.user.id once authentication middleware is ready.
-const getUserId = (req) => req.query.userId;
+const getUserId = (req) => req.user && req.user.id;
 
 const employeeInclude = {
   user: {
@@ -209,19 +206,19 @@ exports.getMyProfile = async (req, res, next) => {
     const userId = getUserId(req);
 
     if (!userId) {
-      return errorResponse(res, 'userId query parameter is required', {}, 400);
+      return errorResponse(res, 'Authentication required', {}, 401);
     }
 
-    const employee = await prisma.employeeProfile.findUnique({
+    const employee = await prisma.employeeProfile.upsert({
       where: {
         userId
       },
+      create: {
+        userId
+      },
+      update: {},
       include: employeeInclude
     });
-
-    if (!employee) {
-      return errorResponse(res, 'Employee profile not found', {}, 404);
-    }
 
     return successResponse(res, 'Employee profile fetched successfully', employee);
   } catch (error) {

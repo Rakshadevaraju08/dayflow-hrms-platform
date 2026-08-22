@@ -33,7 +33,7 @@ export function Profile() {
     setFetchError(null);
     try {
       if (!user?.id) return;
-      const response = await employeeService.getMyProfile(user.id);
+      const response = await employeeService.getMyProfile();
       setProfileData(response.data);
     } catch (err) {
       setFetchError('Failed to load profile details.');
@@ -76,7 +76,7 @@ export function Profile() {
       const response = await employeeService.updateMyProfile({
         phone: formData.phone,
         address: formData.address
-      }, user.id);
+      });
       setProfileData(response.data);
       setStatus('success');
 
