@@ -6,16 +6,16 @@ export const leaveService = {
    * Apply for a new leave
    * @param {Object} leaveData - { leaveType, startDate, endDate, reason }
    */
-  applyLeave: async (leaveData) => {
-    const response = await apiClient.post('/leave', leaveData);
+  applyLeave: async (leaveData, userId) => {
+    const response = await apiClient.post(`/leave?userId=${userId}`, leaveData);
     return response.data;
   },
 
   /**
    * Get leave history for the current employee
    */
-  getMyLeaves: async () => {
-    const response = await apiClient.get('/leave/me');
+  getMyLeaves: async (userId) => {
+    const response = await apiClient.get(`/leave/me?userId=${userId}`);
     return response.data;
   },
 

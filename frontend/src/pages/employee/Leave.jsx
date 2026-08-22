@@ -10,9 +10,11 @@ import { Label } from '../../components/ui/Label';
 import { LoadingState } from '../../components/common/LoadingState';
 import { ErrorState } from '../../components/common/ErrorState';
 import { leaveService } from '../../services/leaveService';
+import { useAuth } from '../../context/AuthContext';
 
 // Mock Data
 export function Leave() {
+  const { user } = useAuth();
   const [leaves, setLeaves] = useState([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState(null);
@@ -30,7 +32,8 @@ export function Leave() {
     setLoading(true);
     setFetchError(null);
     try {
-      const response = await leaveService.getMyLeaves();
+      if (!user?.id) return;
+      const response = await leaveService.getMyLeaves(user.id);
       setLeaves(response.data || []);
     } catch (err) {
       setFetchError('Failed to load leave history.');
@@ -85,7 +88,7 @@ export function Leave() {
         startDate: new Date(formData.startDate).toISOString(),
         endDate: new Date(formData.endDate).toISOString(),
         reason: formData.remarks
-      });
+      }, user.id);
       
       setStatus('success');
       loadLeaves();
