@@ -7,6 +7,9 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import { Badge } from '../../components/ui/Badge';
 import { cn } from '../../lib/utils';
+import { LoadingState } from '../../components/common/LoadingState';
+import { ErrorState } from '../../components/common/ErrorState';
+import { employeeService } from '../../services/employeeService';
 
 // Mock Data
 const SUMMARY = [
@@ -16,18 +19,40 @@ const SUMMARY = [
   { label: 'New This Month', value: '6' },
 ];
 
-const EMPLOYEES = [
-  { id: 'DF-042', name: 'Arjun Mehta', email: 'arjun.m@dayflow.co', role: 'Software Engineer', dept: 'Engineering', location: 'Bengaluru, India', joined: 'Oct 12, 2024', type: 'Full-time', status: 'Active' },
-  { id: 'DF-055', name: 'Priya Sharma', email: 'priya.s@dayflow.co', role: 'Product Manager', dept: 'Product', location: 'Remote', joined: 'Jan 05, 2025', type: 'Full-time', status: 'On Leave' },
-  { id: 'DF-089', name: 'Rohan Kumar', email: 'rohan.k@dayflow.co', role: 'UX Designer', dept: 'Design', location: 'Mumbai, India', joined: 'Mar 18, 2025', type: 'Contract', status: 'Active' },
-  { id: 'DF-091', name: 'Sneha Patel', email: 'sneha.p@dayflow.co', role: 'QA Engineer', dept: 'Engineering', location: 'Bengaluru, India', joined: 'Apr 22, 2025', type: 'Full-time', status: 'Inactive' },
-  { id: 'DF-104', name: 'Michael Chen', email: 'michael.c@dayflow.co', role: 'Data Analyst', dept: 'Data', location: 'Remote', joined: 'Jun 01, 2025', type: 'Full-time', status: 'Active' },
-  { id: 'DF-112', name: 'Sarah Jones', email: 'sarah.j@dayflow.co', role: 'HR Business Partner', dept: 'Human Resources', location: 'New York, USA', joined: 'Aug 15, 2025', type: 'Full-time', status: 'Active' },
-];
-
 const FILTERS = ['Columns', 'Department', 'Site/Location', 'Employment Type', 'Status', 'Role'];
 
 export function Employees() {
+  const [employees, setEmployees] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+
+  React.useEffect(() => {
+    loadEmployees();
+  }, []);
+
+  const loadEmployees = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await employeeService.getAllEmployees();
+      setEmployees(response.data);
+    } catch (err) {
+      setError('Failed to load employees.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) return <LoadingState />;
+  if (error) return <ErrorState message={error} onRetry={loadEmployees} />;
+
+  const summary = [
+    { label: 'Total Employees', value: employees.length },
+    { label: 'Active', value: employees.filter(e => e.user?.role !== 'INACTIVE').length },
+    { label: 'On Leave', value: 0 },
+    { label: 'New This Month', value: 0 },
+  ];
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12">
       
@@ -44,7 +69,7 @@ export function Employees() {
 
       {/* Summary Metrics */}
       <div className="flex gap-8 border-y border-surface-200 py-4 overflow-x-auto hide-scrollbar">
-        {SUMMARY.map((item, idx) => (
+        {summary.map((item, idx) => (
           <div key={idx} className={cn("flex flex-col min-w-[120px]", idx !== 0 && "pl-8 border-l border-surface-200")}>
             <span className="text-2xl font-bold text-surface-900">{item.value}</span>
             <span className="text-sm font-semibold text-surface-500">{item.label}</span>
@@ -101,28 +126,32 @@ export function Employees() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface-100">
-                {EMPLOYEES.map((emp) => (
+                {employees.map((emp) => {
+                  const fullName = emp.user ? `${emp.user.firstName} ${emp.user.lastName}` : 'Unknown';
+                  const email = emp.user?.email || 'N/A';
+                  
+                  return (
                   <tr key={emp.id} className="hover:bg-surface-50/50 transition-colors group">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm shrink-0">
-                          {emp.name.charAt(0)}
+                        <div className="w-10 h-10 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm shrink-0 uppercase">
+                          {fullName.charAt(0)}
                         </div>
                         <div>
-                          <p className="font-bold text-surface-900">{emp.name}</p>
-                          <p className="text-xs font-medium text-surface-500">{emp.email}</p>
+                          <p className="font-bold text-surface-900">{fullName}</p>
+                          <p className="text-xs font-medium text-surface-500">{email}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 font-semibold text-surface-600">{emp.id}</td>
-                    <td className="px-6 py-4 text-surface-700 font-medium">{emp.role}</td>
-                    <td className="px-6 py-4 text-surface-600">{emp.dept}</td>
-                    <td className="px-6 py-4 text-surface-600">{emp.location}</td>
-                    <td className="px-6 py-4 text-surface-600">{emp.joined}</td>
-                    <td className="px-6 py-4 text-surface-600">{emp.type}</td>
+                    <td className="px-6 py-4 font-semibold text-surface-600">{emp.employeeId || 'Pending'}</td>
+                    <td className="px-6 py-4 text-surface-700 font-medium">{emp.designation || '-'}</td>
+                    <td className="px-6 py-4 text-surface-600">{emp.department || '-'}</td>
+                    <td className="px-6 py-4 text-surface-600">{emp.city ? `${emp.city}, ${emp.state}` : '-'}</td>
+                    <td className="px-6 py-4 text-surface-600">{emp.joiningDate ? new Date(emp.joiningDate).toLocaleDateString() : '-'}</td>
+                    <td className="px-6 py-4 text-surface-600">{emp.employmentType || '-'}</td>
                     <td className="px-6 py-4">
-                      <Badge variant={emp.status === 'Active' ? 'success' : emp.status === 'On Leave' ? 'warning' : 'default'} className="px-2.5 py-1 text-xs">
-                        {emp.status}
+                      <Badge variant="success" className="px-2.5 py-1 text-xs">
+                        Active
                       </Badge>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -131,14 +160,14 @@ export function Employees() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                )})}
               </tbody>
             </table>
           </div>
           
           {/* Pagination Footer */}
           <div className="px-6 py-4 border-t border-surface-100 flex items-center justify-between text-sm text-surface-500">
-            <span>Showing 1 to 6 of 142 employees</span>
+            <span>Showing {employees.length} employees</span>
             <div className="flex gap-2">
               <Button variant="outline" size="sm" disabled>Previous</Button>
               <Button variant="outline" size="sm">Next</Button>

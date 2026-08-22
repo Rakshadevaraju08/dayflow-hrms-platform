@@ -6,25 +6,49 @@ import { PasswordInput } from '../../components/ui/PasswordInput';
 import { Button } from '../../components/ui/Button';
 import { Label } from '../../components/ui/Label';
 import { cn } from '../../lib/utils';
+import { useAuth } from '../../context/AuthContext';
 
 export function Signup() {
   const navigate = useNavigate();
+  const { signup } = useAuth();
+  
   const [role, setRole] = useState('EMPLOYEE');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Simple password validation checks
   const hasLength = password.length >= 8;
   const hasNumber = /\d/.test(password);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!hasLength || !hasNumber) return;
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     setLoading(true);
-    setTimeout(() => {
+    setError(null);
+    try {
+      await signup({ 
+        firstName, 
+        lastName, 
+        email, 
+        password,
+        role 
+      });
+      navigate('/dashboard'); // Go directly to dashboard for this prototype
+    } catch (err) {
+      setError(err.message || 'Failed to create account');
+    } finally {
       setLoading(false);
-      navigate('/verify-email');
-    }, 1000);
+    }
   };
 
   return (
@@ -59,16 +83,47 @@ export function Signup() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-5">
+        
+        {error && (
+          <div className="p-3 bg-red-50 text-red-700 text-sm font-medium rounded-lg border border-red-100">
+            {error}
+          </div>
+        )}
+
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <Label htmlFor="employeeId">Employee ID</Label>
-              <Input id="employeeId" placeholder="DF-001" required />
+              <Label htmlFor="firstName">First Name</Label>
+              <Input 
+                id="firstName" 
+                placeholder="John" 
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                required 
+              />
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="email">Email Address</Label>
-              <Input id="email" type="email" placeholder="name@company.com" required />
+              <Label htmlFor="lastName">Last Name</Label>
+              <Input 
+                id="lastName" 
+                placeholder="Doe" 
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                required 
+              />
             </div>
+          </div>
+          
+          <div className="space-y-1.5">
+            <Label htmlFor="email">Email Address</Label>
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="name@company.com" 
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required 
+            />
           </div>
 
           <div className="space-y-1.5">
@@ -84,7 +139,13 @@ export function Signup() {
 
           <div className="space-y-1.5">
             <Label htmlFor="confirmPassword">Confirm Password</Label>
-            <PasswordInput id="confirmPassword" placeholder="••••••••" required />
+            <PasswordInput 
+              id="confirmPassword" 
+              placeholder="••••••••" 
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required 
+            />
           </div>
 
           {/* Password Validation Checklist */}

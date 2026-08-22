@@ -1,13 +1,14 @@
 import React from 'react';
-import { Menu, Search, Bell, ChevronDown } from 'lucide-react';
+import { Menu, Search, ChevronDown } from 'lucide-react';
 import { Input } from '../ui/Input';
+import { NotificationsDropdown } from '../ui/NotificationsDropdown';
+import { useAuth } from '../../context/AuthContext';
 
 export function Header({ onOpenSidebar, pageTitle = "Dashboard" }) {
-  // Mock User
-  const user = {
-    name: "Raksha",
-    role: "HR Admin"
-  };
+  const { user } = useAuth();
+  
+  const getInitials = (name) => name ? name.charAt(0) : 'U';
+
 
   return (
     <header className="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-surface-200 bg-white px-4 lg:px-8">
@@ -35,18 +36,15 @@ export function Header({ onOpenSidebar, pageTitle = "Dashboard" }) {
           </div>
         </div>
 
-        <button className="text-surface-400 hover:text-brand-600 transition-colors relative">
-          <Bell size={20} />
-          <span className="absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
-        </button>
+        <NotificationsDropdown />
 
         <div className="flex items-center gap-3 cursor-pointer group pl-2 border-l border-surface-200">
           <div className="flex flex-col items-end hidden sm:flex">
-            <span className="text-sm font-semibold text-surface-900">{user.name}</span>
-            <span className="text-xs font-medium text-surface-500">{user.role}</span>
+            <span className="text-sm font-semibold text-surface-900">{user?.firstName || 'User'}</span>
+            <span className="text-xs font-medium text-surface-500 capitalize">{user?.role?.toLowerCase() || 'Employee'}</span>
           </div>
-          <div className="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm">
-            {user.name.charAt(0)}
+          <div className="w-9 h-9 rounded-full bg-brand-100 text-brand-700 flex items-center justify-center font-bold text-sm uppercase">
+            {getInitials(user?.firstName)}
           </div>
           <ChevronDown size={16} className="text-surface-400 group-hover:text-surface-900 transition-colors hidden sm:block" />
         </div>

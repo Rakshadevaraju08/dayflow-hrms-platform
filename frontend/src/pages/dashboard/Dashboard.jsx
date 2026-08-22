@@ -6,33 +6,122 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
+import { useAuth } from '../../context/AuthContext';
+import { attendanceService } from '../../services/attendanceService';
+import { leaveService } from '../../services/leaveService';
+import { payrollService } from '../../services/payrollService';
+import { Link } from 'react-router-dom';
 
 // Mock Data
-const USER_NAME = "Raksha";
-const SUMMARY = [
-  { label: 'Attendance', value: '96%', subtext: 'This month', icon: CalendarCheck, color: 'text-brand-600', bg: 'bg-brand-50' },
-  { label: 'Leave Balance', value: '14 Days', subtext: 'Available', icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
-  { label: 'Pending Requests', value: '1', subtext: 'Awaiting approval', icon: FileText, color: 'text-surface-600', bg: 'bg-surface-100' },
-  { label: 'Latest Salary', value: '₹45,000', subtext: 'Processed May 2026', icon: IndianRupee, color: 'text-green-600', bg: 'bg-green-50' },
-];
-
-const RECENT_ACTIVITY = [
-  { id: 1, title: 'Checked In', time: '09:12 AM', type: 'Attendance' },
-  { id: 2, title: 'Sick Leave Approved', time: 'Yesterday', type: 'Leave' },
-  { id: 3, title: 'Profile Updated', time: 'May 18', type: 'Profile' },
-];
-
-const QUICK_ACTIONS = [
-  { label: 'View Profile', icon: ArrowRight },
-  { label: 'Attendance Log', icon: ArrowRight },
-  { label: 'Apply for Leave', icon: ArrowRight },
-  { label: 'View Salary Slip', icon: ArrowRight },
-];
-
 export function Dashboard() {
-  const [attendanceState, setAttendanceState] = useState('CHECKED_IN'); // 'BEFORE', 'CHECKED_IN', 'COMPLETED'
+  const { user } = useAuth();
+  
+  const [loading, setLoading] = useState(true);
+  const [metrics, setMetrics] = useState({
+    attendanceStatus: 'BEFORE', // 'BEFORE', 'CHECKED_IN', 'COMPLETED'
+    todayCheckIn: null,
+    todayCheckOut: null,
+    workingHours: '0h 0m',
+    leaveBalance: 14,
+    pendingLeaves: 0,
+    netSalary: 0
+  });
+
+  React.useEffect(() => {
+    loadDashboardData();
+  }, []);
+
+  const loadDashboardData = async () => {
+    setLoading(true);
+    try {
+      const [attRes, leaveRes, payRes] = await Promise.allSettled([
+        attendanceService.getMyAttendance(),
+        leaveService.getMyLeaves(),
+        payrollService.getMyPayroll()
+      ]);
+
+      let attStatus = 'BEFORE', checkIn = null, checkOut = null, hours = '0h 0m';
+      if (attRes.status === 'fulfilled' && attRes.value?.data) {
+        const records = attRes.value.data;
+        const todayDateStr = new Date().toISOString().split('T')[0];
+        const recordToday = records.find(r => new Date(r.date).toISOString().split('T')[0] === todayDateStr);
+        if (recordToday) {
+          checkIn = recordToday.checkIn;
+          checkOut = recordToday.checkOut;
+          hours = recordToday.workingHours || '0h 0m';
+          if (checkOut) attStatus = 'COMPLETED';
+          else if (checkIn) attStatus = 'CHECKED_IN';
+        }
+      }
+
+      let leaveBal = 14, pendLeaves = 0;
+      if (leaveRes.status === 'fulfilled' && leaveRes.value?.data) {
+        const leaves = leaveRes.value.data;
+        pendLeaves = leaves.filter(l => l.status === 'PENDING').length;
+        const used = leaves.filter(l => l.status === 'APPROVED').reduce((acc, l) => {
+          const s = new Date(l.startDate);
+          const e = new Date(l.endDate);
+          return acc + (Math.ceil(Math.abs(e - s) / (1000 * 60 * 60 * 24)) + 1);
+        }, 0);
+        leaveBal = Math.max(0, 14 - used);
+      }
+
+      let netPay = 0;
+      if (payRes.status === 'fulfilled' && payRes.value?.payroll) {
+        netPay = payRes.value.payroll.netSalary || 0;
+      }
+
+      setMetrics({
+        attendanceStatus: attStatus,
+        todayCheckIn: checkIn,
+        todayCheckOut: checkOut,
+        workingHours: hours,
+        leaveBalance: leaveBal,
+        pendingLeaves: pendLeaves,
+        netSalary: netPay
+      });
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCheckIn = async () => {
+    try {
+      await attendanceService.checkIn();
+      loadDashboardData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleCheckOut = async () => {
+    try {
+      await attendanceService.checkOut();
+      loadDashboardData();
+    } catch (err) {
+      console.error(err);
+    }
+  };
   
   const today = new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+
+  const formatCurrency = (amount) => {
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(amount);
+  };
+  const formatTime = (dateStr) => {
+    if (!dateStr) return '--:--';
+    return new Date(dateStr).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  };
+  
+  const SUMMARY = [
+    { label: 'Attendance', value: 'Active', subtext: 'This month', icon: CalendarCheck, color: 'text-brand-600', bg: 'bg-brand-50' },
+    { label: 'Leave Balance', value: `${metrics.leaveBalance} Days`, subtext: 'Available', icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
+    { label: 'Pending Requests', value: metrics.pendingLeaves.toString(), subtext: 'Awaiting approval', icon: FileText, color: 'text-surface-600', bg: 'bg-surface-100' },
+    { label: 'Latest Salary', value: formatCurrency(metrics.netSalary), subtext: 'Processed', icon: IndianRupee, color: 'text-green-600', bg: 'bg-green-50' },
+  ];
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12">
@@ -40,7 +129,7 @@ export function Dashboard() {
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-surface-900 mb-1">
-          Good morning, {USER_NAME}
+          Good morning, {user?.firstName || 'User'}
         </h1>
         <p className="text-surface-500 font-medium">Here's your workday overview.</p>
       </div>
@@ -79,8 +168,8 @@ export function Dashboard() {
                 <h2 className="text-lg font-bold text-surface-900">Today's Attendance</h2>
                 <p className="text-sm text-surface-500">{today}</p>
               </div>
-              <Badge variant={attendanceState === 'CHECKED_IN' ? 'primary' : 'default'} className="px-3 py-1 text-sm">
-                {attendanceState === 'BEFORE' ? 'Not Checked In' : attendanceState === 'CHECKED_IN' ? 'Active' : 'Completed'}
+              <Badge variant={metrics.attendanceStatus === 'CHECKED_IN' ? 'primary' : 'default'} className="px-3 py-1 text-sm">
+                {metrics.attendanceStatus === 'BEFORE' ? 'Not Checked In' : metrics.attendanceStatus === 'CHECKED_IN' ? 'Active' : 'Completed'}
               </Badge>
             </div>
             
@@ -90,13 +179,13 @@ export function Dashboard() {
                   <div>
                     <p className="text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1">Check-in Time</p>
                     <p className="text-xl font-bold text-surface-900">
-                      {attendanceState !== 'BEFORE' ? '09:12 AM' : '--:--'}
+                      {metrics.attendanceStatus !== 'BEFORE' ? formatTime(metrics.todayCheckIn) : '--:--'}
                     </p>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1">Check-out Time</p>
                     <p className="text-xl font-bold text-surface-900">
-                      {attendanceState === 'COMPLETED' ? '06:05 PM' : '--:--'}
+                      {metrics.attendanceStatus === 'COMPLETED' ? formatTime(metrics.todayCheckOut) : '--:--'}
                     </p>
                   </div>
                 </div>
@@ -104,7 +193,7 @@ export function Dashboard() {
                 <div className="text-center md:text-right border-t md:border-t-0 md:border-l border-surface-100 pt-4 md:pt-0 md:pl-8">
                   <p className="text-xs font-semibold text-surface-500 uppercase tracking-wider mb-1">Working Hours</p>
                   <p className="text-2xl font-bold text-brand-600">
-                    {attendanceState === 'BEFORE' ? '0h 0m' : attendanceState === 'CHECKED_IN' ? '4h 15m' : '8h 53m'}
+                    {metrics.attendanceStatus === 'BEFORE' ? '0h 0m' : metrics.workingHours}
                   </p>
                 </div>
               </div>
@@ -123,23 +212,23 @@ export function Dashboard() {
 
               {/* Action Button */}
               <div className="flex justify-center">
-                {attendanceState === 'BEFORE' && (
-                  <Button size="lg" className="w-full sm:w-auto" onClick={() => setAttendanceState('CHECKED_IN')}>
+                {metrics.attendanceStatus === 'BEFORE' && (
+                  <Button size="lg" className="w-full sm:w-auto" onClick={handleCheckIn} disabled={loading}>
                     Check In Now
                   </Button>
                 )}
-                {attendanceState === 'CHECKED_IN' && (
+                {metrics.attendanceStatus === 'CHECKED_IN' && (
                   <div className="w-full flex flex-col sm:flex-row gap-4 items-center justify-between p-4 bg-brand-50 border border-brand-100 rounded-2xl">
                     <div className="flex items-center gap-3">
                       <div className="w-2 h-2 bg-brand-500 rounded-full animate-pulse" />
                       <span className="text-sm font-medium text-brand-800">You are currently checked in.</span>
                     </div>
-                    <Button variant="danger" size="lg" className="w-full sm:w-auto" onClick={() => setAttendanceState('COMPLETED')}>
+                    <Button variant="danger" size="lg" className="w-full sm:w-auto" onClick={handleCheckOut} disabled={loading}>
                       Check Out
                     </Button>
                   </div>
                 )}
-                {attendanceState === 'COMPLETED' && (
+                {metrics.attendanceStatus === 'COMPLETED' && (
                   <div className="w-full text-center p-4 bg-surface-50 rounded-2xl border border-surface-200 text-surface-600 font-medium">
                     Attendance completed for today.
                   </div>
@@ -159,14 +248,22 @@ export function Dashboard() {
               <CardTitle className="text-lg">Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              {QUICK_ACTIONS.map((action, idx) => (
-                <button key={idx} className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-surface-50 transition-colors group text-left">
-                  <span className="text-sm font-medium text-surface-700 group-hover:text-brand-600 transition-colors">
-                    {action.label}
-                  </span>
-                  <action.icon size={16} className="text-surface-400 group-hover:text-brand-600 transition-colors" />
-                </button>
-              ))}
+              <Link to="/profile" className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-surface-50 transition-colors group text-left block">
+                <span className="text-sm font-medium text-surface-700 group-hover:text-brand-600 transition-colors">View Profile</span>
+                <ArrowRight size={16} className="text-surface-400 group-hover:text-brand-600 transition-colors" />
+              </Link>
+              <Link to="/attendance" className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-surface-50 transition-colors group text-left block">
+                <span className="text-sm font-medium text-surface-700 group-hover:text-brand-600 transition-colors">Attendance Log</span>
+                <ArrowRight size={16} className="text-surface-400 group-hover:text-brand-600 transition-colors" />
+              </Link>
+              <Link to="/leave" className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-surface-50 transition-colors group text-left block">
+                <span className="text-sm font-medium text-surface-700 group-hover:text-brand-600 transition-colors">Apply for Leave</span>
+                <ArrowRight size={16} className="text-surface-400 group-hover:text-brand-600 transition-colors" />
+              </Link>
+              <Link to="/salary" className="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-surface-50 transition-colors group text-left block">
+                <span className="text-sm font-medium text-surface-700 group-hover:text-brand-600 transition-colors">View Salary Slip</span>
+                <ArrowRight size={16} className="text-surface-400 group-hover:text-brand-600 transition-colors" />
+              </Link>
             </CardContent>
           </Card>
 
@@ -179,17 +276,15 @@ export function Dashboard() {
               </div>
             </CardHeader>
             <CardContent className="pt-4 space-y-5">
-              {RECENT_ACTIVITY.map((activity) => (
-                <div key={activity.id} className="flex gap-4">
-                  <div className="mt-1 relative flex items-center justify-center">
-                    <div className="w-2 h-2 rounded-full bg-surface-300" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-surface-900">{activity.title}</p>
-                    <p className="text-xs font-medium text-surface-500 mt-0.5">{activity.time}</p>
-                  </div>
+              <div className="flex gap-4">
+                <div className="mt-1 relative flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-surface-300" />
                 </div>
-              ))}
+                <div>
+                  <p className="text-sm font-semibold text-surface-900">Dashboard Loaded</p>
+                  <p className="text-xs font-medium text-surface-500 mt-0.5">Just now</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
 

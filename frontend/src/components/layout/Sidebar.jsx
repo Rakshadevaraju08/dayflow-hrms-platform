@@ -5,8 +5,11 @@ import {
   CircleDollarSign, Users, Settings, LogOut, X
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
+import { useAuth } from '../../context/AuthContext';
 
-export function Sidebar({ userRole = 'EMPLOYEE', onClose, className }) {
+export function Sidebar({ onClose, className }) {
+  const { user, logout } = useAuth();
+  const userRole = user?.role || 'EMPLOYEE';
   const employeeNav = [
     { name: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
     { name: 'My Profile', path: '/profile', icon: User },
@@ -18,7 +21,7 @@ export function Sidebar({ userRole = 'EMPLOYEE', onClose, className }) {
   const adminNav = [
     { name: 'Dashboard', path: '/admin/dashboard', icon: LayoutDashboard },
     { name: 'Employees', path: '/admin/employees', icon: Users },
-    { name: 'Attendance', path: '/attendance', icon: CalendarCheck },
+    { name: 'Attendance', path: '/admin/attendance', icon: CalendarCheck },
     { name: 'Leave Requests', path: '/leave-requests', icon: Clock },
     { name: 'Payroll', path: '/payroll', icon: CircleDollarSign },
   ];
@@ -83,7 +86,13 @@ export function Sidebar({ userRole = 'EMPLOYEE', onClose, className }) {
           <Settings size={18} className="stroke-[1.75]" />
           Settings
         </NavLink>
-        <button className="flex w-full items-center gap-3 px-3 py-2.5 rounded-full text-sm font-medium text-surface-600 hover:bg-red-50 hover:text-red-600 transition-colors">
+        <button 
+          onClick={() => {
+            logout();
+            if(onClose) onClose();
+          }}
+          className="flex w-full items-center gap-3 px-3 py-2.5 rounded-full text-sm font-medium text-surface-600 hover:bg-red-50 hover:text-red-600 transition-colors"
+        >
           <LogOut size={18} className="stroke-[1.75]" />
           Logout
         </button>
