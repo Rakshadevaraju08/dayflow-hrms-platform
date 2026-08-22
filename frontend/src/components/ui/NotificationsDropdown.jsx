@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Bell, Check, Clock, FileText, User } from 'lucide-react';
+import { Bell, Check, Clock, User } from 'lucide-react';
 
 const MOCK_NOTIFICATIONS = [
   { id: 1, type: 'leave_approved', text: 'Your leave request for 18 May was approved.', time: '10m ago', read: false },
@@ -63,7 +63,7 @@ export function NotificationsDropdown() {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-soft-xl border border-surface-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+        <div className="absolute right-0 mt-2 z-[9999] isolate w-80 rounded-2xl border border-surface-100 bg-white opacity-100 shadow-soft-xl overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
           <div className="flex items-center justify-between p-4 border-b border-surface-100 bg-surface-50/50">
             <h3 className="font-bold text-surface-900">Notifications</h3>
             {unreadCount > 0 && (
@@ -86,7 +86,7 @@ export function NotificationsDropdown() {
                 {notifications.map((notif) => (
                   <div 
                     key={notif.id} 
-                    className={`p-4 flex gap-3 hover:bg-surface-50 transition-colors cursor-pointer ${!notif.read ? 'bg-brand-50/30' : ''}`}
+                    className={`p-4 flex gap-3 bg-white hover:bg-surface-50 transition-colors cursor-pointer ${!notif.read ? 'bg-brand-50' : ''}`}
                     onClick={() => {
                       setNotifications(notifications.map(n => n.id === notif.id ? { ...n, read: true } : n));
                     }}
