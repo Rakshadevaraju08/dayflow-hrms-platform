@@ -1,0 +1,438 @@
+* {
+  box-sizing: border-box;
+}
+
+.personal-job-page {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  background: #fafbff;
+  color: #17213f;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+
+/* =========================================
+   SIDEBAR
+========================================= */
+
+.personal-job-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  width: 260px;
+
+  background: #ffffff;
+  border-right: 1px solid #e8eaf2;
+
+  display: flex;
+  flex-direction: column;
+
+  z-index: 10;
+}
+
+.personal-job-logo {
+  height: 108px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding-left: 30px;
+}
+
+.personal-job-logo-box {
+  width: 43px;
+  height: 43px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #5c3af0,
+    #4221dc
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #ffffff;
+
+  font-size: 23px;
+
+  box-shadow:
+    0 5px 14px rgba(77, 44, 232, 0.22);
+}
+
+.personal-job-logo h2 {
+  margin: 0;
+
+  font-size: 25px;
+
+  color: #101a39;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   MENU
+========================================= */
+
+.personal-job-menu {
+  padding: 20px 17px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+}
+
+.personal-job-menu-item {
+  height: 51px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 0 19px;
+
+  border-radius: 9px;
+
+  color: #52617f;
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.personal-job-menu-item:hover {
+  background: #f3f1ff;
+  color: #4d2ae8;
+}
+
+.personal-job-menu-item.active {
+  background: linear-gradient(
+    90deg,
+    #5933f1,
+    #4b25e5
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 13px rgba(76, 40, 228, 0.18);
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+.personal-job-logout-section {
+  margin-top: auto;
+
+  padding: 18px;
+
+  border-top: 1px solid #e8eaf2;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+.personal-job-main {
+  margin-left: 260px;
+
+  width: calc(100% - 260px);
+
+  min-height: 100vh;
+
+  padding: 35px 48px 60px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.personal-job-header {
+  max-width: 1180px;
+
+  margin: 0 auto 28px;
+}
+
+.personal-job-header h1 {
+  margin: 0;
+
+  color: #111a3a;
+
+  font-size: 29px;
+
+  font-weight: 700;
+}
+
+.personal-job-breadcrumb {
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  margin-top: 8px;
+
+  color: #7a849d;
+
+  font-size: 13px;
+}
+
+.personal-job-breadcrumb .active {
+  color: #4d2ae9;
+
+  font-weight: 500;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+
+.personal-job-card {
+  max-width: 1180px;
+
+  margin: 0 auto 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e8f1;
+
+  border-radius: 10px;
+
+  padding: 22px 25px 25px;
+
+  box-shadow:
+    0 2px 8px rgba(32, 42, 75, 0.025);
+}
+
+
+/* =========================================
+   CARD HEADER
+========================================= */
+
+.personal-job-card-header {
+  display: flex;
+  align-items: center;
+
+  gap: 13px;
+
+  padding-bottom: 20px;
+
+  border-bottom: 1px solid #edf0f5;
+}
+
+.personal-job-card-icon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 8px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #f0edff;
+
+  color: #4e2be7;
+}
+
+.personal-job-card-header h2 {
+  margin: 0;
+
+  color: #17213f;
+
+  font-size: 16px;
+
+  font-weight: 700;
+}
+
+.personal-job-card-header p {
+  margin: 4px 0 0;
+
+  color: #8a94a9;
+
+  font-size: 11px;
+}
+
+
+/* =========================================
+   DETAILS GRID
+========================================= */
+
+.personal-job-details-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  column-gap: 35px;
+
+  row-gap: 0;
+
+  padding-top: 5px;
+}
+
+
+/* =========================================
+   DETAIL
+========================================= */
+
+.personal-job-detail {
+  min-height: 70px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid #f0f1f5;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  gap: 7px;
+}
+
+.personal-job-detail span {
+  color: #7d879e;
+
+  font-size: 11px;
+
+  font-weight: 500;
+}
+
+.personal-job-detail strong {
+  color: #25314f;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  line-height: 1.5;
+}
+
+.personal-job-detail.full-width {
+  grid-column: 1 / -1;
+}
+
+.status-completed {
+  color: #22a06b !important;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1050px) {
+
+  .personal-job-sidebar {
+    width: 220px;
+  }
+
+  .personal-job-main {
+    margin-left: 220px;
+    width: calc(100% - 220px);
+
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .personal-job-details-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+@media (max-width: 760px) {
+
+  .personal-job-sidebar {
+    width: 72px;
+  }
+
+  .personal-job-logo {
+    justify-content: center;
+    padding-left: 0;
+  }
+
+  .personal-job-logo h2 {
+    display: none;
+  }
+
+  .personal-job-menu {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .personal-job-menu-item {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .personal-job-menu-item span {
+    display: none;
+  }
+
+  .personal-job-logout-section {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .personal-job-main {
+    margin-left: 72px;
+    width: calc(100% - 72px);
+
+    padding: 28px 18px 40px;
+  }
+
+  .personal-job-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personal-job-detail.full-width {
+    grid-column: auto;
+  }
+
+}
+
+
+@media (max-width: 480px) {
+
+  .personal-job-main {
+    padding: 22px 12px 30px;
+  }
+
+  .personal-job-card {
+    padding: 18px;
+  }
+
+  .personal-job-header h1 {
+    font-size: 24px;
+  }
+
+}
