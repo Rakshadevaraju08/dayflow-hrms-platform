@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const healthController = require('../controllers/healthController');
 const authRoutes = require('./authRoutes');
 const userRoutes = require('./userRoutes');
@@ -13,7 +14,10 @@ router.get('/health', healthController.checkHealth);
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/attendance', attendanceRoutes);
+
 router.use('/leave', leaveRoutes);
+router.use('/leaves', leaveRoutes);
+
 router.use('/payroll', payrollRoutes);
 router.use('/employees', employeeRoutes);
 
