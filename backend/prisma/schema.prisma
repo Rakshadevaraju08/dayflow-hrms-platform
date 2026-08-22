@@ -72,9 +72,11 @@ model EmployeeProfile {
   manager        String?
 
   // Salary information
-  basicSalary    Float?
-  allowances     Float?
-  deductions     Float?
+  basicSalary         Float?
+  allowances          Float?
+  deductions          Float?
+  netSalary           Float?
+  salaryEffectiveDate DateTime?
 
   documents      Document[]
 
