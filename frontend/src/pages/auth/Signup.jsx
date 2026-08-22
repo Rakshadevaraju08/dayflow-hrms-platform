@@ -37,8 +37,7 @@ export function Signup() {
     setError(null);
     try {
       await signup({ 
-        firstName, 
-        lastName, 
+        name: `${firstName} ${lastName}`.trim(),
         email, 
         password,
         role 

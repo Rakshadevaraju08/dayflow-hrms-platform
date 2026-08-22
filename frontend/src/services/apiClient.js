@@ -38,9 +38,14 @@ apiClient.interceptors.response.use(
     }
     
     // Provide a consistent error object shape to the services
-    const apiError = new Error(
-      error.response?.data?.message || error.message || 'An unexpected error occurred'
-    );
+    let errorMessage = error.response?.data?.message || error.message || 'An unexpected error occurred';
+    
+    // If there are specific validation errors, append the first one
+    if (error.response?.data?.errors && error.response.data.errors.length > 0) {
+      errorMessage = `${errorMessage}: ${error.response.data.errors[0].message}`;
+    }
+
+    const apiError = new Error(errorMessage);
     apiError.status = error.response?.status;
     apiError.data = error.response?.data;
     
