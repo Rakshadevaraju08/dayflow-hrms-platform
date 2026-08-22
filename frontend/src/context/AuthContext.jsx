@@ -14,7 +14,7 @@ export function AuthProvider({ children }) {
       
       if (token) {
         try {
-          const userData = await authService.getMe();
+          const { user: userData } = await authService.getMe();
           setUser(userData);
         } catch (error) {
           console.error('Failed to authenticate token during initial load:', error);

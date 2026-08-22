@@ -6,14 +6,12 @@ const prisma = new PrismaClient({ adapter });
 
 exports.getMe = async (req, res, next) => {
   try {
-    const profile = await prisma.employeeProfile.findUnique({
+    const profile = await prisma.employeeProfile.upsert({
       where: { userId: req.user.id },
+      create: { userId: req.user.id },
+      update: {},
       include: { user: { select: { firstName: true, lastName: true, email: true } } }
     });
-
-    if (!profile) {
-      return res.status(404).json({ success: false, message: 'Employee profile not found' });
-    }
 
     const grossSalary = (profile.basicSalary || 0) + (profile.allowances || 0);
 
