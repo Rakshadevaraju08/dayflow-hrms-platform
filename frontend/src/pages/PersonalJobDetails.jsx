@@ -30,54 +30,82 @@ function PersonalJobDetails() {
           <h2>HRMS</h2>
         </div>
 
-        <nav className="personal-job-menu">
-
-          <div className="personal-job-menu-item">
-            <Grid2X2 size={21} />
-            <span>Dashboard</span>
-          </div>
-
-          <div className="personal-job-menu-item active">
-            <UserRound size={21} />
-            <span>Profile</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <FileText size={21} />
-            <span>My Documents</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <WalletCards size={21} />
-            <span>Salary</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <CalendarDays size={21} />
-            <span>Leave</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <CalendarDays size={21} />
-            <span>Attendance</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <ChartNoAxesCombined size={21} />
-            <span>Performance</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <GraduationCap size={21} />
-            <span>Training</span>
-          </div>
-
-          <div className="personal-job-menu-item">
-            <Headphones size={21} />
-            <span>Help & Support</span>
-          </div>
-
-        </nav>
+        <nav className="sidebar-menu">
+        
+                  {/* Dashboard */}
+                  <div
+                    className="menu-item"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <Grid2X2 size={18} />
+                    <span>Dashboard</span>
+                  </div>
+        
+                  {/* Profile */}
+                  <div
+                    className="menu-item active"
+                    onClick={() => navigate("/profile")}
+                  >
+                    <UserRound size={18} />
+                    <span>Profile</span>
+                  </div>
+        
+                  {/* Documents */}
+                  <div
+                    className="menu-item"
+                    onClick={() => navigate("/profile/documents")}
+                  >
+                    <FileText size={18} />
+                    <span>My Documents</span>
+                  </div>
+        
+                  {/* Salary */}
+                  <div
+                    className="menu-item"
+                    onClick={() => navigate("/profile/salary")}
+                  >
+                    <WalletCards size={18} />
+                    <span>Salary</span>
+                  </div>
+        
+                  {/* Leave - not created yet */}
+                      {/* Leave */}
+                      <div
+                        className="menu-item"
+                        onClick={() => navigate("/profile/leave")}
+                      >
+                        <CalendarDays size={18} />
+                        <span>Leave</span>
+                      </div>
+        
+                  {/* Attendance */}
+                  <div
+                    className="menu-item"
+                    onClick={() => navigate("/profile/attendance")}
+                  >
+                    <CalendarDays size={18} />
+                    <span>Attendance</span>
+                  </div>
+        
+                  {/* Performance - not created yet */}
+                  <div className="menu-item">
+                    <ChartNoAxesCombined size={18} />
+                    <span>Performance</span>
+                  </div>
+        
+                  {/* Training - not created yet */}
+                  <div className="menu-item">
+                    <GraduationCap size={18} />
+                    <span>Training</span>
+                  </div>
+        
+                  {/* Help - not created yet */}
+                  <div className="menu-item">
+                    <Headphones size={18} />
+                    <span>Help & Support</span>
+                  </div>
+        
+                </nav>
 
         <div className="personal-job-logout-section">
           <div className="personal-job-menu-item">

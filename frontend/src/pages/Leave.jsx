@@ -217,10 +217,14 @@ function Leave() {
 
 
           {/* Attendance */}
-          <div className="leave-menu-item">
-            <CalendarDays size={18} />
-            <span>Attendance</span>
-          </div>
+                     <div
+                     className="menu-item"
+                     onClick={() => navigate("/profile/attendance")}
+                     >
+                     <CalendarDays size={18} />
+                     <span>Attendance</span>
+                     </div>
+         
 
 
           {/* Performance */}

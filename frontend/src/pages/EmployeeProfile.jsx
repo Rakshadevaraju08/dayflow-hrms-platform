@@ -49,13 +49,13 @@ function EmployeeProfile() {
           </div>
 
           {/* Profile */}
-          <div
-            className="menu-item active"
-            onClick={() => navigate("/profile")}
-          >
-            <UserRound size={18} />
-            <span>Profile</span>
-          </div>
+                            <div
+                              className="menu-item active"
+                              onClick={() => navigate("/profile")}
+                            >
+                              <UserRound size={18} />
+                              <span>Profile</span>
+                            </div>
 
           {/* Documents */}
           <div
@@ -85,8 +85,11 @@ function EmployeeProfile() {
                 <span>Leave</span>
               </div>
 
-          {/* Attendance - not created yet */}
-          <div className="menu-item">
+          {/* Attendance */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/attendance")}
+          >
             <CalendarDays size={18} />
             <span>Attendance</span>
           </div>

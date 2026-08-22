@@ -1,112 +1,156 @@
-/* ================================
-   PAGE
-================================ */
+/* =========================================================
+   PROFILE PICTURE PAGE
+========================================================= */
 
 .picture-page {
   min-height: 100vh;
+  width: 100%;
+
   display: flex;
+
   background: #f7f8fc;
-  color: #172554;
-  font-family: "Inter", "Segoe UI", sans-serif;
+  color: #101a3a;
+
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  box-sizing: border-box;
+}
+
+.picture-page *,
+.picture-page *::before,
+.picture-page *::after {
+  box-sizing: border-box;
 }
 
 
-/* ================================
+/* =========================================================
    SIDEBAR
-================================ */
+========================================================= */
 
 .picture-sidebar {
-  width: 234px;
-  min-height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e5e7eb;
+  width: 252px;
+  min-width: 252px;
+  height: 100vh;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
 
   display: flex;
   flex-direction: column;
 
-  position: fixed;
-  left: 0;
-  top: 0;
-  bottom: 0;
+  padding: 28px 15px 22px;
 
-  z-index: 10;
+  background: #ffffff;
+
+  border-right: 1px solid #e6e8f0;
+
+  z-index: 100;
+
+  overflow-y: auto;
+}
+
+.picture-sidebar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.picture-sidebar::-webkit-scrollbar-thumb {
+  background: #ddd8f8;
+  border-radius: 10px;
 }
 
 
-/* ================================
+/* =========================================================
    LOGO
-================================ */
+========================================================= */
 
 .picture-logo {
-  height: 88px;
-
   display: flex;
   align-items: center;
 
-  padding: 0 27px;
-
   gap: 13px;
+
+  padding: 4px 12px;
+
+  margin-bottom: 38px;
 }
 
 .picture-logo-box {
-  width: 38px;
-  height: 38px;
-
-  border-radius: 9px;
-
-  background: linear-gradient(
-    135deg,
-    #5428ff,
-    #6738ed
-  );
+  width: 43px;
+  height: 43px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  color: white;
+  border-radius: 11px;
 
-  font-size: 20px;
+  background: linear-gradient(
+    145deg,
+    #683cff,
+    #4b27e7
+  );
+
+  color: #ffffff;
+
+  font-size: 25px;
   font-weight: 700;
 
-  box-shadow: 0 7px 18px rgba(91, 52, 246, 0.22);
+  box-shadow:
+    0 8px 18px rgba(82, 47, 235, 0.2);
 }
 
 .picture-logo h2 {
   margin: 0;
 
-  font-size: 21px;
+  color: #151e3d;
+
+  font-size: 25px;
+
   font-weight: 700;
 
-  color: #111d3d;
+  letter-spacing: -0.7px;
 }
 
 
-/* ================================
-   MENU
-================================ */
+/* =========================================================
+   SIDEBAR MENU
+========================================================= */
 
 .picture-menu {
-  padding: 25px 10px 0;
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
 }
 
 .picture-menu-item {
-  height: 54px;
+  position: relative;
 
-  margin-bottom: 5px;
+  width: 100%;
+  min-height: 48px;
 
   padding: 0 17px;
-
-  border-radius: 9px;
 
   display: flex;
   align-items: center;
 
-  gap: 17px;
+  gap: 15px;
 
-  color: #42547a;
+  border-radius: 10px;
 
-  font-size: 14px;
+  color: #596984;
+
+  font-size: 13px;
+
   font-weight: 500;
 
   cursor: pointer;
@@ -114,20 +158,19 @@
   transition: all 0.2s ease;
 }
 
-.picture-menu-item svg {
-  flex-shrink: 0;
-}
-
 .picture-menu-item:hover {
-  background: #f3f0ff;
-  color: #5527ee;
+  background: #f4f1ff;
+
+  color: #5630ee;
+
+  transform: translateX(2px);
 }
 
 .picture-menu-item.active {
   background: linear-gradient(
-    90deg,
-    #5528ed,
-    #6631ed
+    100deg,
+    #5b35f4,
+    #4d28e7
   );
 
   color: #ffffff;
@@ -135,95 +178,97 @@
   font-weight: 600;
 
   box-shadow:
-    0 7px 17px rgba(91, 45, 230, 0.20);
+    0 7px 18px rgba(82, 47, 235, 0.18);
 }
 
 
-/* ================================
+/* =========================================================
    LOGOUT
-================================ */
+========================================================= */
 
 .picture-logout-section {
   margin-top: auto;
 
-  padding: 0 10px 27px;
-}
+  padding-top: 18px;
 
-.picture-logout-section::before {
-  content: "";
-
-  display: block;
-
-  height: 1px;
-
-  background: #e5e7eb;
-
-  margin: 0 17px 17px;
+  border-top: 1px solid #e7e9f0;
 }
 
 .picture-logout {
-  height: 48px;
+  min-height: 46px;
 
   padding: 0 17px;
 
   display: flex;
   align-items: center;
 
-  gap: 17px;
+  gap: 15px;
 
-  color: #42547a;
+  border-radius: 9px;
 
-  font-size: 14px;
+  color: #687692;
+
+  font-size: 13px;
 
   cursor: pointer;
 
-  border-radius: 8px;
-
-  transition: 0.2s;
+  transition: 0.2s ease;
 }
 
 .picture-logout:hover {
-  background: #f5f3ff;
-  color: #5528ed;
+  background: #fff2f4;
+
+  color: #db5865;
 }
 
 
-/* ================================
-   MAIN
-================================ */
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
 
 .picture-main {
-  margin-left: 234px;
+  width: calc(100% - 252px);
 
-  width: calc(100% - 234px);
+  margin-left: 252px;
 
   min-height: 100vh;
 
-  padding: 34px 54px;
+  padding: 40px 40px 60px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background:
+    radial-gradient(
+      circle at top center,
+      rgba(98, 63, 255, 0.035),
+      transparent 35%
+    );
 }
 
 
-/* ================================
+/* =========================================================
    HEADER
-================================ */
+========================================================= */
 
 .picture-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  width: 100%;
+  max-width: 850px;
 
-  max-width: 1100px;
-
-  margin: 0 auto 30px;
+  margin-bottom: 20px;
 }
 
 .picture-header h1 {
-  margin: 0 0 5px;
+  margin: 0 0 7px;
 
-  color: #10204a;
+  color: #111b3c;
 
-  font-size: 27px;
+  font-size: 28px;
+
   font-weight: 700;
+
+  letter-spacing: -0.7px;
 }
 
 .picture-breadcrumb {
@@ -232,282 +277,632 @@
 
   gap: 8px;
 
-  color: #7b87a4;
+  color: #7c879f;
 
   font-size: 12px;
 }
 
-.breadcrumb-link {
+.picture-breadcrumb .breadcrumb-link {
   cursor: pointer;
 
-  transition: color 0.2s;
+  transition: color 0.2s ease;
 }
 
-.breadcrumb-link:hover {
-  color: #5528ed;
+.picture-breadcrumb .breadcrumb-link:hover {
+  color: #5530ed;
 }
 
-.breadcrumb-active {
-  color: #5528ed;
+.picture-breadcrumb .breadcrumb-active {
+  color: #5630ee;
+
   font-weight: 600;
 }
 
 
-/* ================================
-   PROFILE CARD
-================================ */
+/* =========================================================
+   MAIN PROFILE CARD
+========================================================= */
 
 .picture-card {
-  width: 440px;
+  width: 100%;
+  max-width: 880px;
 
-  min-height: 440px;
-
-  margin: 40px auto 0;
+  padding: 52px 80px 44px;
 
   background: #ffffff;
 
-  border: 1px solid #e7e9f0;
+  border: 1px solid #ececf3;
 
-  border-radius: 12px;
+  border-radius: 28px;
 
   box-shadow:
-    0 8px 24px rgba(30, 41, 80, 0.06);
+    0 16px 40px rgba(35, 39, 75, 0.055);
 
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  padding: 32px 35px 30px;
 }
+
+
+/* =========================================================
+   TITLE
+========================================================= */
 
 .picture-card h2 {
-  margin: 0 0 27px;
+  margin: 0;
 
-  color: #15234a;
+  color: #121b3c;
 
-  font-size: 17px;
-  font-weight: 650;
+  text-align: center;
+
+  font-size: 36px;
+
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: -1px;
+}
+
+.picture-card h2::after {
+  content: "";
+
+  width: 78px;
+  height: 5px;
+
+  display: block;
+
+  margin: 22px auto 0;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #8d67f7,
+      #a37bea
+    );
 }
 
 
-/* ================================
-   PROFILE IMAGE
-================================ */
+/* =========================================================
+   SUBTITLE
+========================================================= */
+
+.picture-card::before {
+  content: "Upload a new profile picture. JPG, PNG or GIF.";
+
+  margin-top: 19px;
+
+  color: #67728e;
+
+  font-size: 18px;
+
+  text-align: center;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   PROFILE IMAGE WRAPPER
+========================================================= */
 
 .picture-image-wrapper {
   position: relative;
 
-  width: 112px;
-  height: 112px;
+  width: 330px;
+  height: 330px;
 
-  margin-bottom: 16px;
+  margin-top: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+
+/* Decorative dotted circle */
+
+.picture-image-wrapper::before {
+  content: "";
+
+  position: absolute;
+
+  width: 290px;
+  height: 290px;
+
+  border: 3px dashed #e6ddfa;
+
+  border-radius: 50%;
+
+  z-index: 0;
+}
+
+
+/* Outer white ring */
+
+.picture-image-wrapper::after {
+  content: "";
+
+  position: absolute;
+
+  width: 255px;
+  height: 255px;
+
+  border-radius: 50%;
+
+  border: 7px solid #ffffff;
+
+  box-shadow:
+    0 0 0 1px #ede9f8,
+    0 12px 30px rgba(67, 47, 132, 0.08);
+
+  z-index: 1;
+}
+
+
+/* =========================================================
+   PROFILE IMAGE
+========================================================= */
+
 .picture-image {
-  width: 112px;
-  height: 112px;
+  position: relative;
+
+  z-index: 2;
+
+  width: 242px;
+  height: 242px;
 
   object-fit: cover;
 
   border-radius: 50%;
 
-  border: 5px solid #f5eefe;
+  display: block;
 
-  box-shadow:
-    0 5px 18px rgba(70, 40, 150, 0.10);
+  background: #eee6f8;
 }
 
 
-/* ================================
+/* =========================================================
    CAMERA BUTTON
-================================ */
+========================================================= */
 
 .picture-camera {
   position: absolute;
 
-  right: -1px;
-  bottom: 2px;
+  right: 27px;
+  bottom: 23px;
 
-  width: 31px;
-  height: 31px;
+  z-index: 5;
 
-  border-radius: 50%;
-
-  border: 3px solid #ffffff;
-
-  background: #172554;
-
-  color: #ffffff;
+  width: 80px;
+  height: 80px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  border: 6px solid #ffffff;
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #6733f4,
+      #4b22df
+    );
+
+  color: #ffffff;
+
   cursor: pointer;
 
-  transition: 0.2s;
+  box-shadow:
+    0 9px 20px rgba(76, 34, 221, 0.28);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .picture-camera:hover {
-  background: #5528ed;
+  transform: scale(1.06);
 
-  transform: scale(1.08);
+  box-shadow:
+    0 12px 24px rgba(76, 34, 221, 0.35);
 }
 
 
-/* ================================
-   HELPER TEXT
-================================ */
-
-.picture-help {
-  margin: 2px 0 24px;
-
-  color: #8992a8;
-
-  font-size: 11px;
-}
-
-
-/* ================================
-   HIDDEN INPUT
-================================ */
+/* =========================================================
+   HIDDEN FILE INPUT
+========================================================= */
 
 .hidden-file-input {
   display: none;
 }
 
 
-/* ================================
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.picture-help {
+  margin: 12px 0 26px;
+
+  color: #737e99;
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   RECOMMENDATION BOX
+========================================================= */
+
+.picture-card .picture-help::before {
+  content: "Recommended:";
+
+  display: inline-block;
+
+  margin-right: 8px;
+
+  color: #151d3d;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
    UPLOAD BUTTON
-================================ */
+========================================================= */
 
 .upload-photo-button {
-  width: 180px;
-  height: 40px;
+  width: 100%;
+  max-width: 610px;
+
+  height: 70px;
 
   border: none;
 
-  border-radius: 5px;
+  border-radius: 12px;
 
-  background: linear-gradient(
-    90deg,
-    #5528ed,
-    #6731ee
-  );
+  background:
+    linear-gradient(
+      100deg,
+      #572bf3,
+      #602fe9
+    );
 
   color: #ffffff;
 
-  font-size: 12px;
-  font-weight: 600;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 7px;
+  gap: 14px;
+
+  font-size: 20px;
+
+  font-weight: 600;
 
   cursor: pointer;
 
   box-shadow:
-    0 5px 12px rgba(91, 45, 230, 0.18);
+    0 9px 20px rgba(84, 42, 231, 0.20);
 
-  transition: all 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .upload-photo-button:hover {
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 
   box-shadow:
-    0 8px 17px rgba(91, 45, 230, 0.25);
+    0 13px 25px rgba(84, 42, 231, 0.27);
+}
+
+.upload-photo-button svg {
+  width: 26px;
+  height: 26px;
+
+  stroke-width: 2;
 }
 
 
-/* ================================
+/* =========================================================
    REMOVE BUTTON
-================================ */
+========================================================= */
 
 .remove-photo-button {
-  width: 180px;
-  height: 40px;
+  width: 100%;
+  max-width: 610px;
 
-  margin-top: 10px;
+  height: 70px;
 
-  border: 1px solid #f08a96;
+  margin-top: 16px;
 
-  border-radius: 5px;
+  border: 1.5px solid #ed9ca6;
+
+  border-radius: 12px;
 
   background: #ffffff;
 
-  color: #e35d6a;
-
-  font-size: 12px;
-  font-weight: 600;
+  color: #d33146;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  gap: 7px;
+  gap: 14px;
+
+  font-size: 20px;
+
+  font-weight: 600;
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .remove-photo-button:hover {
   background: #fff5f6;
 
-  border-color: #e35d6a;
+  border-color: #df7080;
+
+  transform: translateY(-1px);
+}
+
+.remove-photo-button svg {
+  width: 25px;
+  height: 25px;
+
+  stroke-width: 2;
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =========================================================
+   OPTIONAL INFORMATION FOOTER
+========================================================= */
 
-@media (max-width: 900px) {
+.picture-card-info {
+  margin-top: 28px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  color: #68738e;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   EXTRA INFORMATION BLOCK
+   Use if you add these classes to JSX
+========================================================= */
+
+.picture-recommendation {
+  width: 100%;
+  max-width: 610px;
+
+  min-height: 105px;
+
+  margin: 18px 0 30px;
+
+  padding: 20px 26px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  border: 1px solid #ded5f7;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #fbf9ff,
+      #f7f3ff
+    );
+}
+
+.picture-recommendation-icon {
+  width: 60px;
+  height: 60px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #ffffff;
+
+  color: #5530ed;
+
+  box-shadow:
+    0 4px 12px rgba(79, 47, 190, 0.08);
+}
+
+.picture-recommendation-text strong {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #111b3d;
+
+  font-size: 17px;
+}
+
+.picture-recommendation-text span {
+  color: #68738e;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   FEATURE ROW
+========================================================= */
+
+.picture-features {
+  width: 100%;
+  max-width: 610px;
+
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 24px;
+
+  margin-bottom: 31px;
+}
+
+.picture-feature {
+  display: flex;
+  align-items: center;
+
+  gap: 15px;
+
+  min-height: 65px;
+}
+
+.picture-feature + .picture-feature {
+  padding-left: 24px;
+
+  border-left: 1px solid #e7e4ef;
+}
+
+.picture-feature-icon {
+  width: 48px;
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 12px;
+
+  background: #f3efff;
+
+  color: #5530ed;
+}
+
+.picture-feature strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #111b3d;
+
+  font-size: 16px;
+}
+
+.picture-feature span {
+  color: #68738e;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   INFO MESSAGE
+========================================================= */
+
+.picture-info-message {
+  margin-top: 27px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 11px;
+
+  color: #66728c;
+
+  font-size: 14px;
+}
+
+.picture-info-message svg {
+  color: #5530ed;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1100px
+========================================================= */
+
+@media (max-width: 1100px) {
 
   .picture-sidebar {
-    width: 200px;
+    width: 220px;
+    min-width: 220px;
   }
 
   .picture-main {
-    margin-left: 200px;
+    width: calc(100% - 220px);
 
-    width: calc(100% - 200px);
+    margin-left: 220px;
 
-    padding: 30px;
+    padding: 35px 25px 50px;
   }
 
   .picture-card {
-    width: 90%;
+    max-width: 780px;
+
+    padding-left: 55px;
+    padding-right: 55px;
   }
 }
 
 
-@media (max-width: 650px) {
+/* =========================================================
+   RESPONSIVE - 800px
+========================================================= */
+
+@media (max-width: 800px) {
 
   .picture-sidebar {
-    width: 70px;
+    width: 72px;
+    min-width: 72px;
+
+    padding:
+      24px 8px;
   }
 
   .picture-logo {
     justify-content: center;
+
     padding: 0;
+
+    margin-bottom: 30px;
   }
 
   .picture-logo h2 {
     display: none;
   }
 
-  .picture-logo-box {
-    width: 35px;
-    height: 35px;
-  }
-
   .picture-menu-item {
     justify-content: center;
+
     padding: 0;
+
+    gap: 0;
   }
 
   .picture-menu-item span {
@@ -516,6 +911,7 @@
 
   .picture-logout {
     justify-content: center;
+
     padding: 0;
   }
 
@@ -524,16 +920,210 @@
   }
 
   .picture-main {
-    margin-left: 70px;
+    width: calc(100% - 72px);
 
-    width: calc(100% - 70px);
+    margin-left: 72px;
 
-    padding: 25px 15px;
+    padding:
+      25px 16px 40px;
   }
 
   .picture-card {
-    width: 100%;
+    padding:
+      42px 35px
+      38px;
+  }
+
+  .picture-card h2 {
+    font-size: 30px;
+  }
+
+  .picture-image-wrapper {
+    transform: scale(0.9);
 
     margin-top: 25px;
+    margin-bottom: -10px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 600px
+========================================================= */
+
+@media (max-width: 600px) {
+
+  .picture-header h1 {
+    font-size: 24px;
+  }
+
+  .picture-card {
+    padding:
+      35px 20px
+      32px;
+
+    border-radius: 20px;
+  }
+
+  .picture-card h2 {
+    font-size: 27px;
+  }
+
+  .picture-card::before {
+    font-size: 14px;
+  }
+
+  .picture-image-wrapper {
+    width: 280px;
+    height: 280px;
+
+    transform: none;
+
+    margin-top: 30px;
+    margin-bottom: 0;
+  }
+
+  .picture-image-wrapper::before {
+    width: 245px;
+    height: 245px;
+  }
+
+  .picture-image-wrapper::after {
+    width: 215px;
+    height: 215px;
+  }
+
+  .picture-image {
+    width: 204px;
+    height: 204px;
+  }
+
+  .picture-camera {
+    width: 62px;
+    height: 62px;
+
+    right: 23px;
+    bottom: 19px;
+
+    border-width: 4px;
+  }
+
+  .picture-camera svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .picture-recommendation {
+    padding: 16px;
+
+    min-height: 90px;
+  }
+
+  .picture-features {
+    grid-template-columns: 1fr;
+
+    gap: 15px;
+  }
+
+  .picture-feature + .picture-feature {
+    padding-left: 0;
+
+    padding-top: 15px;
+
+    border-left: none;
+
+    border-top: 1px solid #e7e4ef;
+  }
+
+  .upload-photo-button,
+  .remove-photo-button {
+    height: 58px;
+
+    font-size: 16px;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - 420px
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .picture-sidebar {
+    width: 60px;
+    min-width: 60px;
+  }
+
+  .picture-main {
+    width: calc(100% - 60px);
+
+    margin-left: 60px;
+
+    padding:
+      18px 10px
+      30px;
+  }
+
+  .picture-logo-box {
+    width: 36px;
+    height: 36px;
+  }
+
+  .picture-card {
+    padding:
+      30px 15px
+      25px;
+  }
+
+  .picture-card h2 {
+    font-size: 23px;
+  }
+
+  .picture-card::before {
+    font-size: 13px;
+
+    max-width: 280px;
+  }
+
+  .picture-image-wrapper {
+    width: 250px;
+    height: 250px;
+  }
+
+  .picture-image-wrapper::before {
+    width: 220px;
+    height: 220px;
+  }
+
+  .picture-image-wrapper::after {
+    width: 194px;
+    height: 194px;
+  }
+
+  .picture-image {
+    width: 184px;
+    height: 184px;
+  }
+
+  .picture-camera {
+    width: 56px;
+    height: 56px;
+
+    right: 15px;
+    bottom: 15px;
+  }
+
+  .upload-photo-button,
+  .remove-photo-button {
+    height: 54px;
+
+    font-size: 15px;
+  }
+
+  .picture-info-message {
+    text-align: center;
+
+    font-size: 12px;
   }
 }

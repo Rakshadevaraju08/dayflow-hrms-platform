@@ -13,6 +13,7 @@ import Salary from "./pages/Salary";
 import Documents from "./pages/Documents";
 import ProfilePicture from "./pages/ProfilePicture";
 import Leave from "./pages/Leave";
+import Attendance from "./pages/Attendance";
 
 function App() {
   return (
@@ -59,6 +60,12 @@ function App() {
         <Route
           path="/profile/leave"
           element={<Leave />}
+        />
+
+        {/* ================= ATTENDANCE ================= */}
+        <Route
+          path="/profile/attendance"
+          element={<Attendance />}
         />
 
         {/* ================= DEFAULT ================= */}

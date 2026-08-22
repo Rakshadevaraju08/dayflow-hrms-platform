@@ -77,7 +77,7 @@ function Documents() {
   ]);
 
   /* =====================================================
-     OPEN FILE SELECTOR
+     OPEN FILE PICKER
   ===================================================== */
 
   const handleUploadClick = () => {
@@ -85,19 +85,38 @@ function Documents() {
   };
 
   /* =====================================================
-     HANDLE FILE UPLOAD
+     UPLOAD DOCUMENT
   ===================================================== */
 
   const handleFileUpload = (event) => {
     const file = event.target.files?.[0];
 
-    if (!file) return;
+    if (!file) {
+      return;
+    }
 
-    // Maximum file size: 2 MB
+    // 2 MB maximum
     const maxSize = 2 * 1024 * 1024;
 
     if (file.size > maxSize) {
       alert("File size must be less than 2 MB.");
+      event.target.value = "";
+      return;
+    }
+
+    // Allowed file types
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "image/jpeg",
+      "image/png",
+    ];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert(
+        "Please upload a PDF, DOC, DOCX, JPG, or PNG file."
+      );
       event.target.value = "";
       return;
     }
@@ -117,16 +136,16 @@ function Documents() {
       name: file.name,
       category: "Uploaded",
       date: formattedDate,
-      fileUrl: fileUrl,
-      file: file,
+      fileUrl,
+      file,
     };
 
-    setDocuments((prevDocuments) => [
-      ...prevDocuments,
+    setDocuments((previousDocuments) => [
+      ...previousDocuments,
       newDocument,
     ]);
 
-    // Reset input so the same file can be selected again
+    // Allow the same file to be selected again
     event.target.value = "";
   };
 
@@ -134,16 +153,16 @@ function Documents() {
      VIEW DOCUMENT
   ===================================================== */
 
-  const handleView = (document) => {
-    if (!document.fileUrl) {
+  const handleView = (doc) => {
+    if (!doc.fileUrl) {
       alert(
-        `${document.name} is a sample document and does not have a file attached yet.`
+        `${doc.name} does not have an actual file attached.`
       );
       return;
     }
 
     window.open(
-      document.fileUrl,
+      doc.fileUrl,
       "_blank",
       "noopener,noreferrer"
     );
@@ -153,30 +172,36 @@ function Documents() {
      DOWNLOAD DOCUMENT
   ===================================================== */
 
-  const handleDownload = (document) => {
-    if (!document.fileUrl) {
+  const handleDownload = (doc) => {
+    if (!doc.fileUrl || !doc.file) {
       alert(
-        `${document.name} is a sample document and does not have a file attached yet.`
+        `${doc.name} does not have an actual file attached.`
       );
       return;
     }
 
-    const link = document.createElement("a");
+    // Use window.document to avoid naming conflict
+    const downloadLink =
+      window.document.createElement("a");
 
-    link.href = document.fileUrl;
-    link.download = document.name;
+    downloadLink.href = doc.fileUrl;
+    downloadLink.download = doc.name;
+    downloadLink.style.display = "none";
 
-    document.body.appendChild(link);
+    window.document.body.appendChild(downloadLink);
 
-    link.click();
+    downloadLink.click();
 
-    document.body.removeChild(link);
+    window.document.body.removeChild(downloadLink);
   };
 
   return (
     <div className="documents-page">
 
-      {/* ================= SIDEBAR ================= */}
+      {/* =====================================================
+          SIDEBAR
+      ===================================================== */}
+
       <aside className="documents-sidebar">
 
         {/* Logo */}
@@ -191,7 +216,7 @@ function Documents() {
         </div>
 
 
-        {/* ================= NAVIGATION ================= */}
+        {/* Navigation */}
         <nav className="documents-menu">
 
           {/* Dashboard */}
@@ -235,21 +260,23 @@ function Documents() {
 
 
           {/* Leave */}
-          {/* Leave */}
-            <div
-            className="menu-item"
+          <div
+            className="documents-menu-item"
             onClick={() => navigate("/profile/leave")}
-            >
+          >
             <CalendarDays size={18} />
             <span>Leave</span>
-            </div>
+          </div>
 
 
           {/* Attendance */}
-          <div className="documents-menu-item">
+            <div
+            className="menu-item"
+            onClick={() => navigate("/profile/attendance")}
+            >
             <CalendarDays size={18} />
             <span>Attendance</span>
-          </div>
+            </div>
 
 
           {/* Performance */}
@@ -279,7 +306,6 @@ function Documents() {
         <div className="documents-logout">
 
           <LogOut size={18} />
-
           <span>Logout</span>
 
         </div>
@@ -287,7 +313,10 @@ function Documents() {
       </aside>
 
 
-      {/* ================= MAIN CONTENT ================= */}
+      {/* =====================================================
+          MAIN CONTENT
+      ===================================================== */}
+
       <main className="documents-main">
 
         {/* Header */}
@@ -300,8 +329,8 @@ function Documents() {
             <div className="documents-breadcrumb">
 
               <span
-                onClick={() => navigate("/profile")}
                 className="breadcrumb-link"
+                onClick={() => navigate("/profile")}
               >
                 Home
               </span>
@@ -309,8 +338,8 @@ function Documents() {
               <span>›</span>
 
               <span
-                onClick={() => navigate("/profile")}
                 className="breadcrumb-link"
+                onClick={() => navigate("/profile")}
               >
                 Profile
               </span>
@@ -326,7 +355,7 @@ function Documents() {
           </div>
 
 
-          {/* Hidden file input */}
+          {/* Hidden input */}
           <input
             ref={fileInputRef}
             type="file"
@@ -336,40 +365,41 @@ function Documents() {
           />
 
 
-          {/* Upload Button */}
+          {/* Upload button */}
           <button
             className="upload-button"
+            type="button"
             onClick={handleUploadClick}
           >
             <Upload size={15} />
-
-            <span>
-              Upload Document
-            </span>
-
+            <span>Upload Document</span>
           </button>
 
         </div>
 
 
-        {/* ================= DOCUMENTS CARD ================= */}
+        {/* =====================================================
+            DOCUMENT CARD
+        ===================================================== */}
+
         <section className="documents-card">
 
           <div className="documents-card-header">
 
             <div>
-              <h2>
-                My Documents
-              </h2>
+
+              <h2>My Documents</h2>
 
               <p>
                 {documents.length} documents available
               </p>
+
             </div>
 
           </div>
 
 
+          {/* Table */}
           <div className="documents-table-wrapper">
 
             <table className="documents-table">
@@ -399,9 +429,9 @@ function Documents() {
 
               <tbody>
 
-                {documents.map((document) => (
+                {documents.map((doc) => (
 
-                  <tr key={document.id}>
+                  <tr key={doc.id}>
 
                     {/* Document name */}
                     <td className="document-name">
@@ -413,7 +443,7 @@ function Documents() {
                         </div>
 
                         <span>
-                          {document.name}
+                          {doc.name}
                         </span>
 
                       </div>
@@ -423,17 +453,15 @@ function Documents() {
 
                     {/* Category */}
                     <td>
-
                       <span className="category">
-                        {document.category}
+                        {doc.category}
                       </span>
-
                     </td>
 
 
                     {/* Date */}
                     <td>
-                      {document.date}
+                      {doc.date}
                     </td>
 
 
@@ -443,10 +471,9 @@ function Documents() {
                       {/* View */}
                       <button
                         className="icon-button"
+                        type="button"
                         title="View"
-                        onClick={() =>
-                          handleView(document)
-                        }
+                        onClick={() => handleView(doc)}
                       >
                         <Eye size={15} />
                       </button>
@@ -455,10 +482,9 @@ function Documents() {
                       {/* Download */}
                       <button
                         className="icon-button"
+                        type="button"
                         title="Download"
-                        onClick={() =>
-                          handleDownload(document)
-                        }
+                        onClick={() => handleDownload(doc)}
                       >
                         <Download size={15} />
                       </button>
@@ -476,26 +502,41 @@ function Documents() {
           </div>
 
 
-          {/* ================= PAGINATION ================= */}
+          {/* Pagination */}
           <div className="pagination">
 
-            <button className="pagination-arrow">
+            <button
+              className="pagination-arrow"
+              type="button"
+            >
               <ChevronLeft size={15} />
             </button>
 
-            <button className="page-number active">
+            <button
+              className="page-number active"
+              type="button"
+            >
               1
             </button>
 
-            <button className="page-number">
+            <button
+              className="page-number"
+              type="button"
+            >
               2
             </button>
 
-            <button className="page-number">
+            <button
+              className="page-number"
+              type="button"
+            >
               3
             </button>
 
-            <button className="pagination-arrow">
+            <button
+              className="pagination-arrow"
+              type="button"
+            >
               <ChevronRight size={15} />
             </button>
 

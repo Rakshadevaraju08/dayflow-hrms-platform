@@ -1,745 +1,974 @@
-/* =========================================
-   EMPLOYEE PROFILE
-========================================= */
+/* =========================================================
+   DAYFLOW HRMS - EMPLOYEE PROFILE
+========================================================= */
+
+:root {
+  --primary: #5b35f5;
+  --primary-dark: #4724d8;
+  --primary-light: #f2efff;
+
+  --text-primary: #17213f;
+  --text-secondary: #61708f;
+  --text-muted: #8a95aa;
+
+  --border: #e8eaf1;
+  --surface: #ffffff;
+  --background: #f7f8fc;
+
+  --success: #15956a;
+  --danger: #e15b67;
+
+  --shadow-sm: 0 2px 8px rgba(23, 33, 63, 0.035);
+  --shadow-md: 0 8px 25px rgba(23, 33, 63, 0.055);
+}
+
+
+/* =========================================================
+   GLOBAL
+========================================================= */
 
 .employee-page {
   width: 100%;
-  min-width: 100%;
   min-height: 100vh;
 
   display: flex;
 
-  background: #fafbff;
-  color: #101a3a;
+  background: var(--background);
+  color: var(--text-primary);
 
-  font-family: "Inter", Arial, sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Arial,
+    sans-serif;
+
+  box-sizing: border-box;
+}
+
+.employee-page *,
+.employee-page *::before,
+.employee-page *::after {
+  box-sizing: border-box;
 }
 
 
-/* =========================================
+/* =========================================================
    SIDEBAR
-========================================= */
+========================================================= */
 
 .sidebar {
-  width: 260px;
-  min-width: 260px;
-  height: 100vh;
-
   position: fixed;
-  left: 0;
+
   top: 0;
+  left: 0;
   bottom: 0;
+
+  width: 252px;
 
   display: flex;
   flex-direction: column;
 
-  background: #ffffff;
+  padding: 28px 15px 22px;
 
-  border-right: 1px solid #e5e7f0;
+  background: var(--surface);
 
-  padding: 35px 18px 25px;
+  border-right: 1px solid var(--border);
 
-  z-index: 100;
+  z-index: 1000;
+
+  overflow-y: auto;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #ddd9fb;
+  border-radius: 10px;
 }
 
 
-/* =========================================
+/* =========================================================
    LOGO
-========================================= */
+========================================================= */
 
 .logo-container {
   display: flex;
   align-items: center;
 
-  gap: 16px;
+  gap: 13px;
 
-  padding-left: 11px;
+  padding: 4px 12px;
 
-  margin-bottom: 48px;
+  margin-bottom: 38px;
 }
 
 .logo-box {
-  width: 44px;
-  height: 44px;
-
-  flex-shrink: 0;
+  width: 43px;
+  height: 43px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  border-radius: 11px;
+  flex-shrink: 0;
 
-  background: linear-gradient(
-    145deg,
-    #5630f5,
-    #3d20dc
-  );
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #6840ff,
+      #4b28e7
+    );
 
   color: white;
 
-  font-size: 30px;
+  font-size: 26px;
   font-weight: 700;
 
   box-shadow:
-    0 7px 18px rgba(75, 40, 240, 0.22);
+    0 8px 18px rgba(82, 47, 235, 0.20);
 }
 
 .logo-box span {
-  display: block;
-
-  transform: rotate(-25deg);
-
-  margin-top: -4px;
+  transform: rotate(-22deg);
 }
 
 .logo-container h2 {
   margin: 0;
 
-  color: #111a3a;
+  color: var(--text-primary);
 
-  font-size: 30px;
+  font-size: 25px;
 
   line-height: 1;
 
-  font-weight: 700;
+  font-weight: 750;
 
-  letter-spacing: -1px;
+  letter-spacing: -0.7px;
 }
 
 
-/* =========================================
-   SIDEBAR MENU
-========================================= */
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
 
 .sidebar-menu {
   display: flex;
   flex-direction: column;
 
-  gap: 8px;
+  gap: 6px;
 }
 
 .menu-item {
+  position: relative;
+
   width: 100%;
-  height: 52px;
+  min-height: 48px;
 
   display: flex;
   align-items: center;
 
-  gap: 20px;
+  gap: 15px;
 
-  padding: 0 21px;
+  padding: 0 17px;
 
-  border-radius: 11px;
+  border-radius: 10px;
 
-  color: #405077;
+  color: #586782;
 
-  font-size: 16px;
+  font-size: 13px;
 
   font-weight: 500;
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
 }
 
 .menu-item svg {
   flex-shrink: 0;
+
+  stroke-width: 1.9;
 }
 
 .menu-item:hover {
-  background: #f5f3ff;
+  background: #f5f2ff;
 
-  color: #4b2cf5;
+  color: var(--primary);
+
+  transform: translateX(2px);
 }
 
 .menu-item.active {
-  background: linear-gradient(
-    90deg,
-    #5730f5,
-    #4c29e8
-  );
+  background:
+    linear-gradient(
+      100deg,
+      #5d36f4,
+      #4c29e8
+    );
 
   color: #ffffff;
 
   box-shadow:
-    0 7px 16px rgba(80, 45, 235, 0.18);
+    0 7px 18px rgba(82, 47, 235, 0.18);
+
+  transform: none;
+}
+
+.menu-item.active::before {
+  content: "";
+
+  position: absolute;
+
+  left: -15px;
+
+  width: 4px;
+  height: 24px;
+
+  border-radius: 0 5px 5px 0;
+
+  background: #5b35f5;
 }
 
 
-/* =========================================
+/* =========================================================
    LOGOUT
-========================================= */
+========================================================= */
 
 .logout-section {
   margin-top: auto;
 
-  padding-top: 25px;
+  padding-top: 18px;
 
-  border-top: 1px solid #e2e5ef;
+  border-top: 1px solid var(--border);
 }
 
 .logout {
-  height: 48px;
+  min-height: 46px;
 
   display: flex;
   align-items: center;
 
-  gap: 20px;
+  gap: 15px;
 
-  padding-left: 12px;
+  padding: 0 17px;
 
-  color: #405077;
+  border-radius: 9px;
 
-  font-size: 16px;
+  color: #687691;
 
-  font-weight: 500;
+  font-size: 13px;
 
   cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
 }
 
 .logout:hover {
-  color: #4b2cf5;
+  background: #fff2f4;
+
+  color: var(--danger);
 }
 
 
-/* =========================================
-   MAIN CONTENT
-========================================= */
+/* =========================================================
+   MAIN AREA
+========================================================= */
 
 .main-content {
-  width: calc(100% - 260px);
-
-  margin-left: 260px;
+  width: calc(100% - 252px);
 
   min-height: 100vh;
 
-  padding: 32px 22px 55px 38px;
+  margin-left: 252px;
+
+  padding: 30px 34px 48px;
 }
 
 
-/* =========================================
+/* =========================================================
    HEADER
-========================================= */
+========================================================= */
 
 .page-header {
   width: 100%;
-  max-width: 1216px;
+  max-width: 1220px;
 
-  min-height: 68px;
-
-  margin: 0 auto 31px;
+  margin: 0 auto 24px;
 
   display: flex;
   align-items: flex-start;
-
   justify-content: space-between;
+
+  gap: 20px;
 }
 
 .page-header h1 {
   margin: 0;
 
-  color: #111b3c;
+  color: var(--text-primary);
 
-  font-size: 32px;
+  font-size: 29px;
 
   line-height: 1.2;
 
-  font-weight: 700;
+  font-weight: 750;
 
   letter-spacing: -0.7px;
 }
 
 .breadcrumb {
-  margin-top: 10px;
+  margin-top: 7px;
 
   display: flex;
   align-items: center;
 
-  gap: 9px;
+  gap: 7px;
 
-  color: #40527d;
+  color: var(--text-muted);
 
-  font-size: 16px;
-
-  font-weight: 400;
+  font-size: 12px;
 }
 
 .breadcrumb svg {
-  color: #607096;
+  color: #a5adbd;
 }
 
 .breadcrumb .current {
-  color: #4931ec;
+  color: var(--primary);
+
+  font-weight: 600;
+}
+
+.breadcrumb-link {
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  color: var(--primary);
 }
 
 
-/* =========================================
-   EDIT PROFILE
-========================================= */
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
 
 .edit-button {
-  height: 55px;
+  min-height: 44px;
 
-  padding: 0 25px;
+  padding: 0 18px;
 
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  gap: 11px;
+  gap: 8px;
 
-  background: #ffffff;
+  border: 1px solid #6345ef;
 
-  border: 1.5px solid #4d32f2;
+  border-radius: 9px;
 
-  border-radius: 12px;
+  background: white;
 
-  color: #4930e8;
+  color: #5030df;
 
-  font-size: 16px;
+  font-size: 12px;
 
-  font-weight: 600;
+  font-weight: 650;
 
   cursor: pointer;
 
-  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .edit-button:hover {
-  background: #f7f5ff;
+  background: var(--primary);
+
+  color: white;
+
+  box-shadow:
+    0 8px 18px rgba(82, 47, 235, 0.18);
 
   transform: translateY(-1px);
 }
 
 
-/* =========================================
+/* =========================================================
    PROFILE CARD
-========================================= */
+========================================================= */
 
 .profile-card {
   width: 100%;
-  max-width: 1216px;
+  max-width: 1220px;
 
-  min-height: 416px;
+  min-height: 390px;
 
   margin: 0 auto;
 
-  padding: 35px 40px;
+  padding: 30px 34px;
 
   display: grid;
 
   grid-template-columns:
-    365px
+    320px
     1px
     minmax(0, 1fr);
 
-  background: #ffffff;
+  background: var(--surface);
 
-  border: 1px solid #e8eaf3;
+  border: 1px solid var(--border);
 
-  border-radius: 18px;
+  border-radius: 16px;
 
-  box-shadow:
-    0 5px 20px rgba(45, 53, 90, 0.025);
+  box-shadow: var(--shadow-md);
 }
 
 
-/* =========================================
-   PROFILE SECTION
-========================================= */
+/* =========================================================
+   PROFILE LEFT SECTION
+========================================================= */
 
 .profile-section {
   display: flex;
-
   flex-direction: column;
 
   align-items: center;
 
-  padding-top: 0;
+  text-align: center;
 }
 
 .profile-image-container {
-  width: 164px;
-  height: 164px;
-
   position: relative;
 
-  margin-bottom: 14px;
+  width: 150px;
+  height: 150px;
+
+  margin-bottom: 15px;
 }
 
 .profile-image {
-  width: 164px;
-  height: 164px;
-
-  display: block;
+  width: 150px;
+  height: 150px;
 
   object-fit: cover;
 
+  display: block;
+
   border-radius: 50%;
 
-  border: 1px solid #ece7fb;
+  border: 5px solid #f0ebff;
+
+  box-shadow:
+    0 8px 20px rgba(59, 43, 140, 0.09);
 }
 
 
-/* Camera */
+/* =========================================================
+   CAMERA
+========================================================= */
 
 .camera-button {
-  width: 42px;
-  height: 42px;
-
   position: absolute;
 
   right: -3px;
-  bottom: 4px;
+  bottom: 3px;
+
+  width: 38px;
+  height: 38px;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  border: 3px solid white;
+
   border-radius: 50%;
 
-  border: 3px solid #ffffff;
+  background: var(--primary);
 
-  background: #5530ee;
-
-  color: #ffffff;
+  color: white;
 
   cursor: pointer;
 
   box-shadow:
-    0 5px 13px rgba(74, 42, 232, 0.3);
+    0 6px 14px rgba(81, 45, 235, 0.28);
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.camera-button:hover {
+  background: var(--primary-dark);
+
+  transform: scale(1.08);
 }
 
 
-/* Name */
+/* =========================================================
+   EMPLOYEE INFORMATION
+========================================================= */
 
 .employee-name {
   margin: 0;
 
-  color: #101a3c;
+  color: var(--text-primary);
 
-  font-size: 26px;
+  font-size: 23px;
 
-  line-height: 1.2;
-
-  font-weight: 700;
+  font-weight: 750;
 
   letter-spacing: -0.4px;
 }
 
 .employee-role {
-  margin: 10px 0 20px;
+  margin: 6px 0 17px;
 
-  color: #536384;
+  color: var(--text-secondary);
 
-  font-size: 16px;
+  font-size: 13px;
 
   font-weight: 500;
 }
 
-
-/* Employee ID */
-
 .employee-id {
-  width: 204px;
-  height: 77px;
+  width: 196px;
+
+  min-height: 70px;
+
+  padding: 11px;
 
   display: flex;
-
   flex-direction: column;
 
   align-items: center;
   justify-content: center;
 
-  gap: 7px;
+  gap: 4px;
 
-  border-radius: 9px;
+  border-radius: 10px;
 
-  background: linear-gradient(
-    135deg,
-    #f6f4ff,
-    #f4f2ff
-  );
+  background:
+    linear-gradient(
+      135deg,
+      #f7f5ff,
+      #f3f0ff
+    );
+
+  border: 1px solid #ece8ff;
 }
 
 .employee-id span {
-  color: #4b30ef;
+  color: #6543e9;
 
-  font-size: 14px;
+  font-size: 10px;
 
   font-weight: 500;
 }
 
 .employee-id strong {
-  color: #101a3c;
+  color: var(--text-primary);
 
-  font-size: 18px;
+  font-size: 16px;
 
   font-weight: 700;
 }
 
 
-/* =========================================
-   DIVIDER
-========================================= */
+/* =========================================================
+   PROFILE DIVIDER
+========================================================= */
 
 .profile-divider {
   width: 1px;
+  height: 320px;
 
-  height: 340px;
-
-  background: #e4e6ef;
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      #e4e7ee 10%,
+      #e4e7ee 90%,
+      transparent
+    );
 }
 
 
-/* =========================================
+/* =========================================================
    PERSONAL DETAILS
-========================================= */
+========================================================= */
 
 .personal-section {
-  padding-left: 36px;
-
-  padding-top: 5px;
-
   min-width: 0;
+
+  padding-left: 35px;
+
+  padding-top: 3px;
 }
 
 .personal-section h3 {
-  margin: 0 0 23px;
+  margin: 0 0 21px;
 
-  color: #111a3b;
+  color: var(--text-primary);
 
-  font-size: 18px;
-
-  line-height: 1.2;
+  font-size: 17px;
 
   font-weight: 700;
 }
 
 .personal-details {
   display: flex;
-
   flex-direction: column;
 
-  gap: 16px;
+  gap: 14px;
 }
 
 .detail-row {
   display: grid;
 
-  grid-template-columns: 262px minmax(0, 1fr);
+  grid-template-columns:
+    210px
+    minmax(0, 1fr);
+
+  gap: 12px;
 
   align-items: start;
 
-  font-size: 16px;
+  font-size: 13px;
 
   line-height: 1.45;
 }
 
 .detail-row .label {
-  color: #536384;
+  color: var(--text-secondary);
 
   font-weight: 500;
 }
 
 .detail-row .value {
-  color: #111a3b;
+  color: var(--text-primary);
 
   font-weight: 600;
 
   min-width: 0;
+
+  overflow-wrap: anywhere;
 }
 
 .address {
-  line-height: 1.75;
+  line-height: 1.65;
 }
 
 
-/* =========================================
+/* =========================================================
    BOTTOM CARDS
-========================================= */
+========================================================= */
 
 .bottom-cards {
   width: 100%;
-  max-width: 1216px;
+  max-width: 1220px;
 
-  margin: 25px auto 0;
+  margin: 20px auto 0;
 
   display: grid;
 
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns:
+    1fr
+    1fr;
 
-  gap: 19px;
+  gap: 18px;
 }
 
 .info-card {
-  min-height: 394px;
+  min-height: 350px;
 
-  padding: 25px 28px;
+  padding: 23px 25px;
 
-  background: #ffffff;
+  background: var(--surface);
 
-  border: 1px solid #e8eaf3;
+  border: 1px solid var(--border);
 
-  border-radius: 18px;
+  border-radius: 16px;
 
-  box-shadow:
-    0 5px 20px rgba(45, 53, 90, 0.025);
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.info-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.clickable-card {
+  cursor: pointer;
+}
+
+.clickable-card:hover {
+  transform: translateY(-2px);
 }
 
 
-/* =========================================
-   CARD TITLE
-========================================= */
+/* =========================================================
+   CARD HEADER
+========================================================= */
 
 .card-title {
   display: flex;
-
   align-items: center;
 
-  gap: 14px;
+  gap: 11px;
 
-  margin-bottom: 29px;
+  margin-bottom: 24px;
 }
 
 .card-icon {
-  width: 40px;
-  height: 40px;
-
-  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
 
   display: flex;
-
   align-items: center;
   justify-content: center;
 
-  border-radius: 12px;
+  flex-shrink: 0;
 
-  background: #f1efff;
+  border-radius: 10px;
 
-  color: #4d2df0;
+  background: var(--primary-light);
+
+  color: var(--primary);
 }
 
 .card-title h3 {
   margin: 0;
 
-  color: #111a3b;
+  color: var(--text-primary);
 
-  font-size: 17px;
-
-  line-height: 1.2;
+  font-size: 15px;
 
   font-weight: 700;
 }
 
 
-/* =========================================
+/* =========================================================
    JOB DETAILS
-========================================= */
+========================================================= */
 
 .job-details {
   display: flex;
-
   flex-direction: column;
 
-  gap: 15px;
+  gap: 13px;
 }
 
 .job-row {
   display: grid;
 
-  grid-template-columns: 214px minmax(0, 1fr);
+  grid-template-columns:
+    190px
+    minmax(0, 1fr);
+
+  gap: 12px;
 
   align-items: center;
 
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .job-row span {
-  color: #536384;
+  color: var(--text-secondary);
 
   font-weight: 500;
 }
 
 .job-row strong {
-  color: #111a3b;
+  color: var(--text-primary);
 
   font-weight: 600;
+
+  overflow-wrap: anywhere;
 }
 
 .job-row .purple-label {
-  color: #5c5be7;
+  color: #5e58d9;
 }
 
 
-/* =========================================
+/* =========================================================
    CONTACT DETAILS
-========================================= */
+========================================================= */
 
 .contact-details {
   display: flex;
-
   flex-direction: column;
 
-  gap: 22px;
+  gap: 19px;
 }
 
 .contact-row {
   display: grid;
 
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns:
+    190px
+    minmax(0, 1fr);
+
+  gap: 12px;
 
   align-items: start;
 
-  font-size: 15px;
+  font-size: 12px;
 }
 
 .contact-row span {
-  color: #536384;
+  color: var(--text-secondary);
 
   font-weight: 500;
 }
 
 .contact-row strong {
-  color: #111a3b;
+  color: var(--text-primary);
 
   font-weight: 600;
 
-  line-height: 1.4;
+  line-height: 1.45;
+
+  overflow-wrap: anywhere;
 }
 
 
-/* =========================================
-   RESPONSIVE
-========================================= */
+/* =========================================================
+   JOB DETAILS NAVIGATION
+========================================================= */
+
+.profile-navigation {
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+
+  margin: 18px 0;
+}
+
+.job-details-button {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 15px;
+
+  border: 1px solid #ded9ff;
+
+  border-radius: 8px;
+
+  background: white;
+
+  color: var(--primary);
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.job-details-button:hover {
+  background: var(--primary-light);
+
+  border-color: #c9c0ff;
+
+  transform: translateX(2px);
+}
+
+
+/* =========================================================
+   GENERAL CLICKABLE ELEMENTS
+========================================================= */
+
+button,
+.menu-item,
+.logout,
+.clickable-card {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1200px
+========================================================= */
 
 @media (max-width: 1200px) {
 
   .profile-card {
     grid-template-columns:
-      320px
+      280px
       1px
       minmax(0, 1fr);
 
-    padding: 30px;
+    padding: 28px;
+  }
+
+  .personal-section {
+    padding-left: 28px;
   }
 
   .detail-row {
-    grid-template-columns: 190px minmax(0, 1fr);
+    grid-template-columns:
+      175px
+      minmax(0, 1fr);
   }
 
-  .job-row {
-    grid-template-columns: 175px minmax(0, 1fr);
-  }
-
+  .job-row,
   .contact-row {
-    grid-template-columns: 180px minmax(0, 1fr);
+    grid-template-columns:
+      160px
+      minmax(0, 1fr);
   }
 }
 
 
+/* =========================================================
+   RESPONSIVE - 1000px
+========================================================= */
+
 @media (max-width: 1000px) {
+
+  .sidebar {
+    width: 220px;
+  }
+
+  .main-content {
+    width: calc(100% - 220px);
+
+    margin-left: 220px;
+
+    padding: 28px 22px 40px;
+  }
 
   .profile-card {
     grid-template-columns: 1fr;
@@ -762,19 +991,25 @@
 }
 
 
+/* =========================================================
+   RESPONSIVE - 800px
+========================================================= */
+
 @media (max-width: 800px) {
 
   .sidebar {
-    width: 75px;
-    min-width: 75px;
+    width: 72px;
 
-    padding: 25px 10px;
+    padding:
+      24px 8px;
   }
 
   .logo-container {
     justify-content: center;
 
     padding: 0;
+
+    margin-bottom: 30px;
   }
 
   .logo-container h2 {
@@ -785,16 +1020,22 @@
     justify-content: center;
 
     padding: 0;
+
+    gap: 0;
   }
 
   .menu-item span {
     display: none;
   }
 
+  .menu-item.active::before {
+    left: -8px;
+  }
+
   .logout {
     justify-content: center;
 
-    padding-left: 0;
+    padding: 0;
   }
 
   .logout span {
@@ -802,31 +1043,55 @@
   }
 
   .main-content {
-    width: calc(100% - 75px);
+    width: calc(100% - 72px);
 
-    margin-left: 75px;
+    margin-left: 72px;
 
-    padding: 25px 18px;
+    padding:
+      24px 16px
+      35px;
+  }
+
+  .page-header h1 {
+    font-size: 25px;
   }
 }
 
+
+/* =========================================================
+   RESPONSIVE - 600px
+========================================================= */
 
 @media (max-width: 600px) {
 
   .page-header {
     flex-direction: column;
 
-    gap: 18px;
+    gap: 14px;
   }
 
   .edit-button {
-    width: auto;
-
-    padding: 0 20px;
+    width: 100%;
   }
 
   .profile-card {
-    padding: 25px 20px;
+    padding: 24px 18px;
+
+    border-radius: 14px;
+  }
+
+  .profile-image-container {
+    width: 138px;
+    height: 138px;
+  }
+
+  .profile-image {
+    width: 138px;
+    height: 138px;
+  }
+
+  .employee-name {
+    font-size: 21px;
   }
 
   .detail-row,
@@ -834,78 +1099,75 @@
   .contact-row {
     grid-template-columns: 1fr;
 
-    gap: 5px;
+    gap: 4px;
   }
 
-  .personal-details {
-    gap: 19px;
+  .detail-row .label,
+  .job-row span,
+  .contact-row span {
+    font-size: 11px;
+  }
+
+  .detail-row .value,
+  .job-row strong,
+  .contact-row strong {
+    font-size: 12px;
   }
 
   .info-card {
-    padding: 22px 20px;
+    padding: 20px 18px;
+
+    border-radius: 14px;
   }
 }
-/* =========================================
-   PERSONAL & JOB DETAILS NAVIGATION
-========================================= */
 
-.profile-navigation {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-  margin: 20px 0;
-}
 
-.job-details-button {
-  border: none;
-  background: #ffffff;
+/* =========================================================
+   RESPONSIVE - 420px
+========================================================= */
 
-  color: #4f2ee8;
+@media (max-width: 420px) {
 
-  border: 1px solid #ded9ff;
+  .sidebar {
+    width: 60px;
+  }
 
-  padding: 12px 18px;
+  .main-content {
+    width: calc(100% - 60px);
 
-  border-radius: 8px;
+    margin-left: 60px;
 
-  display: flex;
-  align-items: center;
+    padding:
+      18px 11px
+      30px;
+  }
 
-  gap: 9px;
+  .logo-box {
+    width: 36px;
+    height: 36px;
 
-  font-size: 13px;
-  font-weight: 600;
+    font-size: 21px;
+  }
 
-  cursor: pointer;
+  .menu-item {
+    min-height: 43px;
+  }
 
-  transition: all 0.2s ease;
-}
+  .page-header h1 {
+    font-size: 22px;
+  }
 
-.job-details-button:hover {
-  background: #f4f1ff;
-  border-color: #c8bfff;
+  .profile-card {
+    padding:
+      20px 15px;
+  }
 
-  transform: translateX(2px);
-}
+  .bottom-cards {
+    gap: 14px;
+  }
 
-.job-details-button svg:last-child {
-  margin-left: 3px;
-}
-/* =========================================
-   BREADCRUMB NAVIGATION
-========================================= */
-
-.breadcrumb-link {
-  cursor: pointer;
-  color: #7b849b;
-  transition: color 0.2s ease;
-}
-
-.breadcrumb-link:hover {
-  color: #4f2ee8;
-}
-
-.details-link {
-  color: #4f2ee8;
-  font-weight: 500;
+  .info-card {
+    padding:
+      18px 15px;
+  }
 }
