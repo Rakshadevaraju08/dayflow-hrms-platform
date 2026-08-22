@@ -14,9 +14,12 @@ import {
   ChevronRight,
 } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
 import "./Salary.css";
 
 function Salary() {
+  const navigate = useNavigate();
+
   return (
     <div className="salary-page">
 
@@ -31,49 +34,70 @@ function Salary() {
           <h2>HRMS</h2>
         </div>
 
-        {/* Navigation */}
+        {/* ================= NAVIGATION ================= */}
         <nav className="salary-menu">
 
-          <div className="salary-menu-item">
+          {/* Dashboard */}
+          <div
+            className="salary-menu-item"
+            onClick={() => navigate("/profile")}
+          >
             <Grid2X2 size={17} />
             <span>Dashboard</span>
           </div>
 
-          <div className="salary-menu-item active">
+          {/* Profile */}
+          <div
+            className="salary-menu-item"
+            onClick={() => navigate("/profile")}
+          >
             <UserRound size={17} />
             <span>Profile</span>
           </div>
 
-          <div className="salary-menu-item">
+          {/* My Documents */}
+          <div
+            className="salary-menu-item"
+            onClick={() => navigate("/profile/documents")}
+          >
             <FileText size={17} />
             <span>My Documents</span>
           </div>
 
-          <div className="salary-menu-item">
+          {/* Salary */}
+          <div
+            className="salary-menu-item active"
+            onClick={() => navigate("/profile/salary")}
+          >
             <WalletCards size={17} />
             <span>Salary</span>
           </div>
 
+          {/* Leave - route not created yet */}
           <div className="salary-menu-item">
             <CalendarDays size={17} />
             <span>Leave</span>
           </div>
 
+          {/* Attendance - route not created yet */}
           <div className="salary-menu-item">
             <CalendarDays size={17} />
             <span>Attendance</span>
           </div>
 
+          {/* Performance - route not created yet */}
           <div className="salary-menu-item">
             <ChartNoAxesCombined size={17} />
             <span>Performance</span>
           </div>
 
+          {/* Training - route not created yet */}
           <div className="salary-menu-item">
             <GraduationCap size={17} />
             <span>Training</span>
           </div>
 
+          {/* Help - route not created yet */}
           <div className="salary-menu-item">
             <Headphones size={17} />
             <span>Help & Support</span>
@@ -81,9 +105,12 @@ function Salary() {
 
         </nav>
 
-        {/* Logout */}
+        {/* ================= LOGOUT ================= */}
         <div className="salary-logout-section">
-          <div className="salary-logout">
+          <div
+            className="salary-logout"
+            onClick={() => navigate("/profile")}
+          >
             <LogOut size={17} />
             <span>Logout</span>
           </div>
@@ -102,11 +129,27 @@ function Salary() {
             <h1>Profile</h1>
 
             <div className="salary-breadcrumb">
-              <span>Home</span>
+              <span
+                onClick={() => navigate("/profile")}
+                className="breadcrumb-link"
+              >
+                Home
+              </span>
+
               <ChevronRight size={13} />
-              <span>Profile</span>
+
+              <span
+                onClick={() => navigate("/profile")}
+                className="breadcrumb-link"
+              >
+                Profile
+              </span>
+
               <ChevronRight size={13} />
-              <span className="salary-current">Salary</span>
+
+              <span className="salary-current">
+                Salary
+              </span>
             </div>
           </div>
 
@@ -121,19 +164,35 @@ function Salary() {
         {/* ================= TABS ================= */}
         <div className="profile-tabs">
 
-          <div className="profile-tab">
+          {/* Personal Details */}
+          <div
+            className="profile-tab"
+            onClick={() => navigate("/profile")}
+          >
             Personal Details
           </div>
 
-          <div className="profile-tab">
+          {/* Job Details */}
+          <div
+            className="profile-tab"
+            onClick={() => navigate("/profile/details")}
+          >
             Job Details
           </div>
 
-          <div className="profile-tab active">
+          {/* Salary */}
+          <div
+            className="profile-tab active"
+            onClick={() => navigate("/profile/salary")}
+          >
             Salary
           </div>
 
-          <div className="profile-tab">
+          {/* Documents */}
+          <div
+            className="profile-tab"
+            onClick={() => navigate("/profile/documents")}
+          >
             Documents
           </div>
 

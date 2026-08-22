@@ -1,0 +1,539 @@
+/* ================================
+   PAGE
+================================ */
+
+.picture-page {
+  min-height: 100vh;
+  display: flex;
+  background: #f7f8fc;
+  color: #172554;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+
+/* ================================
+   SIDEBAR
+================================ */
+
+.picture-sidebar {
+  width: 234px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e5e7eb;
+
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  z-index: 10;
+}
+
+
+/* ================================
+   LOGO
+================================ */
+
+.picture-logo {
+  height: 88px;
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 27px;
+
+  gap: 13px;
+}
+
+.picture-logo-box {
+  width: 38px;
+  height: 38px;
+
+  border-radius: 9px;
+
+  background: linear-gradient(
+    135deg,
+    #5428ff,
+    #6738ed
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  box-shadow: 0 7px 18px rgba(91, 52, 246, 0.22);
+}
+
+.picture-logo h2 {
+  margin: 0;
+
+  font-size: 21px;
+  font-weight: 700;
+
+  color: #111d3d;
+}
+
+
+/* ================================
+   MENU
+================================ */
+
+.picture-menu {
+  padding: 25px 10px 0;
+}
+
+.picture-menu-item {
+  height: 54px;
+
+  margin-bottom: 5px;
+
+  padding: 0 17px;
+
+  border-radius: 9px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 17px;
+
+  color: #42547a;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.picture-menu-item svg {
+  flex-shrink: 0;
+}
+
+.picture-menu-item:hover {
+  background: #f3f0ff;
+  color: #5527ee;
+}
+
+.picture-menu-item.active {
+  background: linear-gradient(
+    90deg,
+    #5528ed,
+    #6631ed
+  );
+
+  color: #ffffff;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 7px 17px rgba(91, 45, 230, 0.20);
+}
+
+
+/* ================================
+   LOGOUT
+================================ */
+
+.picture-logout-section {
+  margin-top: auto;
+
+  padding: 0 10px 27px;
+}
+
+.picture-logout-section::before {
+  content: "";
+
+  display: block;
+
+  height: 1px;
+
+  background: #e5e7eb;
+
+  margin: 0 17px 17px;
+}
+
+.picture-logout {
+  height: 48px;
+
+  padding: 0 17px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 17px;
+
+  color: #42547a;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  border-radius: 8px;
+
+  transition: 0.2s;
+}
+
+.picture-logout:hover {
+  background: #f5f3ff;
+  color: #5528ed;
+}
+
+
+/* ================================
+   MAIN
+================================ */
+
+.picture-main {
+  margin-left: 234px;
+
+  width: calc(100% - 234px);
+
+  min-height: 100vh;
+
+  padding: 34px 54px;
+}
+
+
+/* ================================
+   HEADER
+================================ */
+
+.picture-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  max-width: 1100px;
+
+  margin: 0 auto 30px;
+}
+
+.picture-header h1 {
+  margin: 0 0 5px;
+
+  color: #10204a;
+
+  font-size: 27px;
+  font-weight: 700;
+}
+
+.picture-breadcrumb {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #7b87a4;
+
+  font-size: 12px;
+}
+
+.breadcrumb-link {
+  cursor: pointer;
+
+  transition: color 0.2s;
+}
+
+.breadcrumb-link:hover {
+  color: #5528ed;
+}
+
+.breadcrumb-active {
+  color: #5528ed;
+  font-weight: 600;
+}
+
+
+/* ================================
+   PROFILE CARD
+================================ */
+
+.picture-card {
+  width: 440px;
+
+  min-height: 440px;
+
+  margin: 40px auto 0;
+
+  background: #ffffff;
+
+  border: 1px solid #e7e9f0;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 8px 24px rgba(30, 41, 80, 0.06);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 32px 35px 30px;
+}
+
+.picture-card h2 {
+  margin: 0 0 27px;
+
+  color: #15234a;
+
+  font-size: 17px;
+  font-weight: 650;
+}
+
+
+/* ================================
+   PROFILE IMAGE
+================================ */
+
+.picture-image-wrapper {
+  position: relative;
+
+  width: 112px;
+  height: 112px;
+
+  margin-bottom: 16px;
+}
+
+.picture-image {
+  width: 112px;
+  height: 112px;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  border: 5px solid #f5eefe;
+
+  box-shadow:
+    0 5px 18px rgba(70, 40, 150, 0.10);
+}
+
+
+/* ================================
+   CAMERA BUTTON
+================================ */
+
+.picture-camera {
+  position: absolute;
+
+  right: -1px;
+  bottom: 2px;
+
+  width: 31px;
+  height: 31px;
+
+  border-radius: 50%;
+
+  border: 3px solid #ffffff;
+
+  background: #172554;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.picture-camera:hover {
+  background: #5528ed;
+
+  transform: scale(1.08);
+}
+
+
+/* ================================
+   HELPER TEXT
+================================ */
+
+.picture-help {
+  margin: 2px 0 24px;
+
+  color: #8992a8;
+
+  font-size: 11px;
+}
+
+
+/* ================================
+   HIDDEN INPUT
+================================ */
+
+.hidden-file-input {
+  display: none;
+}
+
+
+/* ================================
+   UPLOAD BUTTON
+================================ */
+
+.upload-photo-button {
+  width: 180px;
+  height: 40px;
+
+  border: none;
+
+  border-radius: 5px;
+
+  background: linear-gradient(
+    90deg,
+    #5528ed,
+    #6731ee
+  );
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 12px rgba(91, 45, 230, 0.18);
+
+  transition: all 0.2s ease;
+}
+
+.upload-photo-button:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 17px rgba(91, 45, 230, 0.25);
+}
+
+
+/* ================================
+   REMOVE BUTTON
+================================ */
+
+.remove-photo-button {
+  width: 180px;
+  height: 40px;
+
+  margin-top: 10px;
+
+  border: 1px solid #f08a96;
+
+  border-radius: 5px;
+
+  background: #ffffff;
+
+  color: #e35d6a;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.remove-photo-button:hover {
+  background: #fff5f6;
+
+  border-color: #e35d6a;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 900px) {
+
+  .picture-sidebar {
+    width: 200px;
+  }
+
+  .picture-main {
+    margin-left: 200px;
+
+    width: calc(100% - 200px);
+
+    padding: 30px;
+  }
+
+  .picture-card {
+    width: 90%;
+  }
+}
+
+
+@media (max-width: 650px) {
+
+  .picture-sidebar {
+    width: 70px;
+  }
+
+  .picture-logo {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .picture-logo h2 {
+    display: none;
+  }
+
+  .picture-logo-box {
+    width: 35px;
+    height: 35px;
+  }
+
+  .picture-menu-item {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .picture-menu-item span {
+    display: none;
+  }
+
+  .picture-logout {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .picture-logout span {
+    display: none;
+  }
+
+  .picture-main {
+    margin-left: 70px;
+
+    width: calc(100% - 70px);
+
+    padding: 25px 15px;
+  }
+
+  .picture-card {
+    width: 100%;
+
+    margin-top: 25px;
+  }
+}

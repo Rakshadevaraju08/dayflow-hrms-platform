@@ -10,37 +10,51 @@ import EmployeeProfile from "./pages/EmployeeProfile";
 import EditProfile from "./pages/EditProfile";
 import PersonalJobDetails from "./pages/PersonalJobDetails";
 import Salary from "./pages/Salary";
+import Documents from "./pages/Documents";
+import ProfilePicture from "./pages/ProfilePicture";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Employee Profile */}
+        {/* ================= EMPLOYEE PROFILE ================= */}
         <Route
           path="/profile"
           element={<EmployeeProfile />}
         />
 
-        {/* Edit Profile */}
+        {/* ================= EDIT PROFILE ================= */}
         <Route
           path="/profile/edit"
           element={<EditProfile />}
         />
 
-        {/* Personal & Job Details */}
+        {/* ================= PERSONAL & JOB DETAILS ================= */}
         <Route
           path="/profile/details"
           element={<PersonalJobDetails />}
         />
 
-        {/* Salary */}
+        {/* ================= SALARY ================= */}
         <Route
           path="/profile/salary"
           element={<Salary />}
         />
 
-        {/* Default page */}
+        {/* ================= DOCUMENTS ================= */}
+        <Route
+          path="/profile/documents"
+          element={<Documents />}
+        />
+
+        {/* ================= PROFILE PICTURE ================= */}
+        <Route
+          path="/profile/picture"
+          element={<ProfilePicture />}
+        />
+
+        {/* ================= DEFAULT ================= */}
         <Route
           path="*"
           element={

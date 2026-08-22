@@ -1,7 +1,24 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./EditProfile.css";
 
+import {
+  Grid2X2,
+  UserRound,
+  FileText,
+  WalletCards,
+  CalendarDays,
+  ChartNoAxesCombined,
+  GraduationCap,
+  Headphones,
+  LogOut,
+  Upload,
+  Camera,
+  ChevronRight,
+} from "lucide-react";
+
 function EditProfile() {
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
 
   const [profileImage, setProfileImage] = useState(
@@ -26,6 +43,8 @@ function EditProfile() {
     location: "Bengaluru",
   });
 
+  /* ================= FORM CHANGE ================= */
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -34,6 +53,8 @@ function EditProfile() {
       [name]: value,
     }));
   };
+
+  /* ================= IMAGE ================= */
 
   const handleImageChange = (e) => {
     const file = e.target.files?.[0];
@@ -48,20 +69,30 @@ function EditProfile() {
     fileInputRef.current?.click();
   };
 
+  /* ================= SAVE ================= */
+
   const handleSave = () => {
     console.log("Profile saved:", formData);
 
     alert("Profile updated successfully!");
+
+    // Go back to Employee Profile
+    navigate("/profile");
   };
 
+  /* ================= CANCEL ================= */
+
   const handleCancel = () => {
-    window.history.back();
+    navigate("/profile");
   };
 
   return (
     <div className="edit-profile-page">
 
-      {/* ================= SIDEBAR ================= */}
+      {/* =====================================================
+          SIDEBAR
+      ====================================================== */}
+
       <aside className="edit-sidebar">
 
         {/* Logo */}
@@ -73,86 +104,210 @@ function EditProfile() {
           <span>HRMS</span>
         </div>
 
-        {/* Navigation */}
+        {/* ================= NAVIGATION ================= */}
+
         <nav className="edit-navigation">
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">⊞</span>
+          {/* Dashboard */}
+          <div
+            className="edit-nav-item"
+            onClick={() => navigate("/profile")}
+          >
+            <span className="edit-nav-icon">
+              <Grid2X2 size={18} />
+            </span>
+
             <span>Dashboard</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item active">
-            <span className="edit-nav-icon">♙</span>
+
+          {/* Profile */}
+          <div
+            className="edit-nav-item active"
+            onClick={() => navigate("/profile")}
+          >
+            <span className="edit-nav-icon">
+              <UserRound size={18} />
+            </span>
+
             <span>Profile</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">▣</span>
+
+          {/* My Documents */}
+          <div
+            className="edit-nav-item"
+            onClick={() => navigate("/profile/documents")}
+          >
+            <span className="edit-nav-icon">
+              <FileText size={18} />
+            </span>
+
             <span>My Documents</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">▤</span>
+
+          {/* Salary */}
+          <div
+            className="edit-nav-item"
+            onClick={() => navigate("/profile/salary")}
+          >
+            <span className="edit-nav-icon">
+              <WalletCards size={18} />
+            </span>
+
             <span>Salary</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">□</span>
+
+          {/* Leave */}
+          <div
+            className="edit-nav-item"
+            onClick={() => {
+              alert("Leave page is not created yet.");
+            }}
+          >
+            <span className="edit-nav-icon">
+              <CalendarDays size={18} />
+            </span>
+
             <span>Leave</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">▣</span>
+
+          {/* Attendance */}
+          <div
+            className="edit-nav-item"
+            onClick={() => {
+              alert("Attendance page is not created yet.");
+            }}
+          >
+            <span className="edit-nav-icon">
+              <CalendarDays size={18} />
+            </span>
+
             <span>Attendance</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">⌁</span>
+
+          {/* Performance */}
+          <div
+            className="edit-nav-item"
+            onClick={() => {
+              alert("Performance page is not created yet.");
+            }}
+          >
+            <span className="edit-nav-icon">
+              <ChartNoAxesCombined size={18} />
+            </span>
+
             <span>Performance</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">◇</span>
+
+          {/* Training */}
+          <div
+            className="edit-nav-item"
+            onClick={() => {
+              alert("Training page is not created yet.");
+            }}
+          >
+            <span className="edit-nav-icon">
+              <GraduationCap size={18} />
+            </span>
+
             <span>Training</span>
-          </a>
+          </div>
 
-          <a href="#" className="edit-nav-item">
-            <span className="edit-nav-icon">♧</span>
-            <span>Help &amp; Support</span>
-          </a>
+
+          {/* Help & Support */}
+          <div
+            className="edit-nav-item"
+            onClick={() => {
+              alert("Help & Support page is not created yet.");
+            }}
+          >
+            <span className="edit-nav-icon">
+              <Headphones size={18} />
+            </span>
+
+            <span>Help & Support</span>
+          </div>
 
         </nav>
 
-        {/* Logout */}
+
+        {/* ================= LOGOUT ================= */}
+
         <div className="edit-sidebar-bottom">
-          <a href="#" className="edit-nav-item logout">
-            <span className="edit-nav-icon">↪</span>
+
+          <div
+            className="edit-nav-item logout"
+            onClick={() => navigate("/profile")}
+          >
+            <span className="edit-nav-icon">
+              <LogOut size={18} />
+            </span>
+
             <span>Logout</span>
-          </a>
+          </div>
+
         </div>
 
       </aside>
 
 
-      {/* ================= MAIN CONTENT ================= */}
+      {/* =====================================================
+          MAIN CONTENT
+      ====================================================== */}
+
       <main className="edit-main">
 
-        {/* Header */}
+        {/* ================= HEADER ================= */}
+
         <header className="edit-header">
 
           <div>
+
             <h1>Edit Profile</h1>
 
             <div className="edit-breadcrumb">
-              <span>Home</span>
-              <span className="breadcrumb-arrow">›</span>
-              <span>Profile</span>
-              <span className="breadcrumb-arrow">›</span>
-              <span className="breadcrumb-active">Edit</span>
+
+              <span
+                onClick={() => navigate("/profile")}
+                style={{ cursor: "pointer" }}
+              >
+                Home
+              </span>
+
+              <span className="breadcrumb-arrow">
+                <ChevronRight size={14} />
+              </span>
+
+              <span
+                onClick={() => navigate("/profile")}
+                style={{ cursor: "pointer" }}
+              >
+                Profile
+              </span>
+
+              <span className="breadcrumb-arrow">
+                <ChevronRight size={14} />
+              </span>
+
+              <span className="breadcrumb-active">
+                Edit
+              </span>
+
             </div>
+
           </div>
 
+
+          {/* HEADER BUTTONS */}
+
           <div className="edit-header-actions">
+
             <button
               className="cancel-button"
               onClick={handleCancel}
@@ -160,21 +315,28 @@ function EditProfile() {
               Cancel
             </button>
 
+
             <button
               className="save-button"
               onClick={handleSave}
             >
               Save Changes
             </button>
+
           </div>
 
         </header>
 
 
-        {/* ================= TOP SECTION ================= */}
+        {/* =====================================================
+            TOP SECTION
+        ====================================================== */}
+
         <section className="edit-top-grid">
 
-          {/* Profile Picture */}
+
+          {/* ================= PROFILE PICTURE ================= */}
+
           <div className="profile-picture-card">
 
             <h2>Profile Picture</h2>
@@ -187,19 +349,22 @@ function EditProfile() {
                 className="profile-picture"
               />
 
+
               <button
                 className="picture-camera-button"
                 onClick={handleUploadClick}
                 title="Change profile picture"
               >
-                <span>⌾</span>
+                <Camera size={18} />
               </button>
 
             </div>
 
+
             <p className="picture-info">
               JPG, PNG or GIF. Max size of 2MB.
             </p>
+
 
             <input
               ref={fileInputRef}
@@ -209,10 +374,12 @@ function EditProfile() {
               hidden
             />
 
+
             <button
               className="upload-photo-button"
               onClick={handleUploadClick}
             >
+              <Upload size={15} />
               Upload Photo
             </button>
 
@@ -220,6 +387,7 @@ function EditProfile() {
 
 
           {/* ================= PERSONAL DETAILS ================= */}
+
           <div className="personal-details-card">
 
             <h2>Personal Details</h2>
@@ -228,6 +396,7 @@ function EditProfile() {
 
               {/* Full Name */}
               <div className="form-group">
+
                 <label>Full Name</label>
 
                 <input
@@ -236,11 +405,13 @@ function EditProfile() {
                   value={formData.fullName}
                   onChange={handleChange}
                 />
+
               </div>
 
 
               {/* Email */}
               <div className="form-group">
+
                 <label>Email</label>
 
                 <input
@@ -249,11 +420,13 @@ function EditProfile() {
                   value={formData.email}
                   onChange={handleChange}
                 />
+
               </div>
 
 
               {/* Phone */}
               <div className="form-group">
+
                 <label>Phone</label>
 
                 <input
@@ -262,14 +435,17 @@ function EditProfile() {
                   value={formData.phone}
                   onChange={handleChange}
                 />
+
               </div>
 
 
               {/* Date of Birth */}
               <div className="form-group">
+
                 <label>Date of Birth</label>
 
                 <div className="input-with-icon">
+
                   <input
                     type="text"
                     name="dateOfBirth"
@@ -277,16 +453,22 @@ function EditProfile() {
                     onChange={handleChange}
                   />
 
-                  <span className="calendar-icon">▣</span>
+                  <span className="calendar-icon">
+                    ▣
+                  </span>
+
                 </div>
+
               </div>
 
 
               {/* Gender */}
               <div className="form-group">
+
                 <label>Gender</label>
 
                 <div className="select-wrapper">
+
                   <select
                     name="gender"
                     value={formData.gender}
@@ -296,15 +478,19 @@ function EditProfile() {
                     <option>Male</option>
                     <option>Other</option>
                   </select>
+
                 </div>
+
               </div>
 
 
               {/* Marital Status */}
               <div className="form-group">
+
                 <label>Marital Status</label>
 
                 <div className="select-wrapper">
+
                   <select
                     name="maritalStatus"
                     value={formData.maritalStatus}
@@ -315,13 +501,16 @@ function EditProfile() {
                     <option>Divorced</option>
                     <option>Widowed</option>
                   </select>
+
                 </div>
+
               </div>
 
             </div>
 
 
             {/* Address */}
+
             <div className="form-group address-group">
 
               <label>Address</label>
@@ -340,18 +529,25 @@ function EditProfile() {
         </section>
 
 
-        {/* ================= JOB DETAILS ================= */}
+        {/* =====================================================
+            JOB DETAILS
+        ====================================================== */}
+
         <section className="job-details-card">
 
           <h2>Job Details</h2>
 
           <div className="job-form-grid">
 
+
             {/* Department */}
+
             <div className="form-group">
+
               <label>Department</label>
 
               <div className="select-wrapper">
+
                 <select
                   name="department"
                   value={formData.department}
@@ -363,12 +559,16 @@ function EditProfile() {
                   <option>Marketing</option>
                   <option>Administration</option>
                 </select>
+
               </div>
+
             </div>
 
 
             {/* Designation */}
+
             <div className="form-group">
+
               <label>Designation</label>
 
               <input
@@ -377,14 +577,18 @@ function EditProfile() {
                 value={formData.designation}
                 onChange={handleChange}
               />
+
             </div>
 
 
             {/* Reporting To */}
+
             <div className="form-group">
+
               <label>Reporting To</label>
 
               <div className="select-wrapper">
+
                 <select
                   name="reportingTo"
                   value={formData.reportingTo}
@@ -394,15 +598,20 @@ function EditProfile() {
                   <option>Karthik L</option>
                   <option>Admin</option>
                 </select>
+
               </div>
+
             </div>
 
 
             {/* Employment Type */}
+
             <div className="form-group">
+
               <label>Employment Type</label>
 
               <div className="select-wrapper">
+
                 <select
                   name="employmentType"
                   value={formData.employmentType}
@@ -413,15 +622,20 @@ function EditProfile() {
                   <option>Contract</option>
                   <option>Intern</option>
                 </select>
+
               </div>
+
             </div>
 
 
             {/* Date of Joining */}
+
             <div className="form-group">
+
               <label>Date of Joining</label>
 
               <div className="input-with-icon">
+
                 <input
                   type="text"
                   name="dateOfJoining"
@@ -429,16 +643,23 @@ function EditProfile() {
                   onChange={handleChange}
                 />
 
-                <span className="calendar-icon">▣</span>
+                <span className="calendar-icon">
+                  ▣
+                </span>
+
               </div>
+
             </div>
 
 
             {/* Location */}
+
             <div className="form-group">
+
               <label>Location</label>
 
               <div className="select-wrapper">
+
                 <select
                   name="location"
                   value={formData.location}
@@ -450,7 +671,9 @@ function EditProfile() {
                   <option>Chennai</option>
                   <option>Mumbai</option>
                 </select>
+
               </div>
+
             </div>
 
           </div>

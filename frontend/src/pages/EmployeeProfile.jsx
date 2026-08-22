@@ -16,8 +16,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 
-import "./EmployeeProfile.css";
 import { useNavigate } from "react-router-dom";
+import "./EmployeeProfile.css";
 
 function EmployeeProfile() {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function EmployeeProfile() {
           <h2>HRMS</h2>
         </div>
 
-        {/* Menu */}
+        {/* ================= MENU ================= */}
         <nav className="sidebar-menu">
 
           {/* Dashboard */}
@@ -44,7 +44,7 @@ function EmployeeProfile() {
             className="menu-item"
             onClick={() => navigate("/profile")}
           >
-            <Grid2X2 size={22} />
+            <Grid2X2 size={18} />
             <span>Dashboard</span>
           </div>
 
@@ -53,16 +53,16 @@ function EmployeeProfile() {
             className="menu-item active"
             onClick={() => navigate("/profile")}
           >
-            <UserRound size={22} />
+            <UserRound size={18} />
             <span>Profile</span>
           </div>
 
-          {/* My Documents */}
+          {/* Documents */}
           <div
             className="menu-item"
             onClick={() => navigate("/profile/documents")}
           >
-            <FileText size={22} />
+            <FileText size={18} />
             <span>My Documents</span>
           </div>
 
@@ -71,52 +71,37 @@ function EmployeeProfile() {
             className="menu-item"
             onClick={() => navigate("/profile/salary")}
           >
-            <WalletCards size={22} />
+            <WalletCards size={18} />
             <span>Salary</span>
           </div>
 
-          {/* Leave */}
-          <div
-            className="menu-item"
-            onClick={() => navigate("/profile/leave")}
-          >
-            <CalendarDays size={22} />
+          {/* Leave - not created yet */}
+          <div className="menu-item">
+            <CalendarDays size={18} />
             <span>Leave</span>
           </div>
 
-          {/* Attendance */}
-          <div
-            className="menu-item"
-            onClick={() => navigate("/profile/attendance")}
-          >
-            <CalendarDays size={22} />
+          {/* Attendance - not created yet */}
+          <div className="menu-item">
+            <CalendarDays size={18} />
             <span>Attendance</span>
           </div>
 
-          {/* Performance */}
-          <div
-            className="menu-item"
-            onClick={() => navigate("/profile/performance")}
-          >
-            <ChartNoAxesCombined size={22} />
+          {/* Performance - not created yet */}
+          <div className="menu-item">
+            <ChartNoAxesCombined size={18} />
             <span>Performance</span>
           </div>
 
-          {/* Training */}
-          <div
-            className="menu-item"
-            onClick={() => navigate("/profile/training")}
-          >
-            <GraduationCap size={22} />
+          {/* Training - not created yet */}
+          <div className="menu-item">
+            <GraduationCap size={18} />
             <span>Training</span>
           </div>
 
-          {/* Help & Support */}
-          <div
-            className="menu-item"
-            onClick={() => navigate("/profile/help")}
-          >
-            <Headphones size={22} />
+          {/* Help - not created yet */}
+          <div className="menu-item">
+            <Headphones size={18} />
             <span>Help & Support</span>
           </div>
 
@@ -125,7 +110,7 @@ function EmployeeProfile() {
         {/* Logout */}
         <div className="logout-section">
           <div className="logout">
-            <LogOut size={22} />
+            <LogOut size={18} />
             <span>Logout</span>
           </div>
         </div>
@@ -135,34 +120,46 @@ function EmployeeProfile() {
       {/* ================= MAIN CONTENT ================= */}
       <main className="main-content">
 
-        {/* Header */}
+        {/* ================= HEADER ================= */}
         <div className="page-header">
 
           <div>
             <h1>Employee Profile</h1>
 
             <div className="breadcrumb">
-              <span>Home</span>
-              <ChevronRight size={16} />
-              <span className="current">Profile</span>
+
+              <span
+                onClick={() => navigate("/profile")}
+                className="breadcrumb-link"
+              >
+                Home
+              </span>
+
+              <ChevronRight size={15} />
+
+              <span className="current">
+                Profile
+              </span>
+
             </div>
           </div>
 
-          {/* Edit Profile Button */}
+          {/* EDIT PROFILE BUTTON */}
           <button
             className="edit-button"
             onClick={() => navigate("/profile/edit")}
           >
-            <Pencil size={18} />
+            <Pencil size={17} />
             <span>Edit Profile</span>
           </button>
 
         </div>
 
+
         {/* ================= PROFILE CARD ================= */}
         <div className="profile-card">
 
-          {/* Left Profile */}
+          {/* LEFT PROFILE */}
           <div className="profile-section">
 
             <div className="profile-image-container">
@@ -174,7 +171,7 @@ function EmployeeProfile() {
               />
 
               <button className="camera-button">
-                <Camera size={18} />
+                <Camera size={17} />
               </button>
 
             </div>
@@ -194,10 +191,12 @@ function EmployeeProfile() {
 
           </div>
 
-          {/* Vertical Divider */}
+
+          {/* DIVIDER */}
           <div className="profile-divider"></div>
 
-          {/* Personal Details */}
+
+          {/* PERSONAL DETAILS */}
           <div className="personal-section">
 
             <h3>Personal Details</h3>
@@ -256,20 +255,20 @@ function EmployeeProfile() {
 
         </div>
 
+
         {/* ================= BOTTOM CARDS ================= */}
         <div className="bottom-cards">
 
-          {/* Job Details */}
+          {/* JOB DETAILS */}
           <div
-            className="info-card"
+            className="info-card clickable-card"
             onClick={() => navigate("/profile/details")}
-            style={{ cursor: "pointer" }}
           >
 
             <div className="card-title">
 
               <div className="card-icon">
-                <BriefcaseBusiness size={20} />
+                <BriefcaseBusiness size={18} />
               </div>
 
               <h3>Job Details</h3>
@@ -304,21 +303,17 @@ function EmployeeProfile() {
               </div>
 
               <div className="job-row">
-                <span className="purple-label">Location</span>
+                <span>Location</span>
                 <strong>Bengaluru</strong>
               </div>
 
               <div className="job-row">
-                <span className="purple-label">
-                  Probation Period
-                </span>
+                <span>Probation Period</span>
                 <strong>Completed</strong>
               </div>
 
               <div className="job-row">
-                <span className="purple-label">
-                  Notice Period
-                </span>
+                <span>Notice Period</span>
                 <strong>60 Days</strong>
               </div>
 
@@ -326,13 +321,14 @@ function EmployeeProfile() {
 
           </div>
 
-          {/* Contact Details */}
+
+          {/* CONTACT DETAILS */}
           <div className="info-card">
 
             <div className="card-title">
 
               <div className="card-icon">
-                <Phone size={20} />
+                <Phone size={18} />
               </div>
 
               <h3>Contact Details</h3>
