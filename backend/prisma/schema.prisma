@@ -72,9 +72,11 @@ model EmployeeProfile {
   manager        String?
 
   // Salary information
-  basicSalary    Float?
-  allowances     Float?
-  deductions     Float?
+  basicSalary         Float?
+  allowances          Float?
+  deductions          Float?
+  netSalary           Float?
+  salaryEffectiveDate DateTime?
 
   documents      Document[]
 
@@ -93,17 +95,17 @@ model Document {
 }
 
 model Attendance {
-  id        String           @id @default(uuid())
-  userId    String
-  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
-  date      DateTime         @default(now())
-  checkIn   DateTime?
-  checkOut  DateTime?
-  status    AttendanceStatus @default(PRESENT)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  id         String           @id @default(uuid())
+  employeeId String
+  user       User             @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date       DateTime         @default(now())
+  checkIn    DateTime?
+  checkOut   DateTime?
+  status     AttendanceStatus @default(PRESENT)
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
 
-  @@unique([userId, date])
+  @@unique([employeeId, date])
 }
 
 model LeaveRequest {
