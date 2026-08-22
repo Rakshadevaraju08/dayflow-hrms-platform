@@ -61,7 +61,13 @@ model EmployeeProfile {
   state          String?
   dateOfBirth    DateTime?
   gender         String?
+  maritalStatus  String?
   profilePicture String?
+
+  // Contact Information
+  emergencyContactName  String?
+  emergencyContactPhone String?
+  emergencyContactEmail String?
 
   // Job information
   employeeId     String?    @unique
@@ -70,6 +76,9 @@ model EmployeeProfile {
   joiningDate    DateTime?
   employmentType String?
   manager        String?
+  location       String?
+  probationPeriod String?
+  noticePeriod   String?
 
   // Salary information
   basicSalary         Float?

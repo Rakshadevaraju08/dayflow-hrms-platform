@@ -40,9 +40,16 @@ const profileFields = [
   'joiningDate',
   'employmentType',
   'manager',
+  'location',
+  'probationPeriod',
+  'noticePeriod',
   'basicSalary',
   'allowances',
-  'deductions'
+  'deductions',
+  'maritalStatus',
+  'emergencyContactName',
+  'emergencyContactPhone',
+  'emergencyContactEmail'
 ];
 
 const dateFields = ['dateOfBirth', 'joiningDate'];
