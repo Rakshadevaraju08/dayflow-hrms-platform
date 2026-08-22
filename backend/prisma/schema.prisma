@@ -11,9 +11,8 @@ datasource db {
 }
 
 enum Role {
-  ADMIN
-  HR
   EMPLOYEE
+  HR
 }
 
 enum AttendanceStatus {
@@ -36,30 +35,68 @@ enum LeaveStatus {
 }
 
 model User {
-  id             String         @id @default(uuid())
-  employeeId     String         @unique
-  email          String         @unique
-  passwordHash   String
-  role           Role           @default(EMPLOYEE)
+  id             String           @id @default(uuid())
   firstName      String
   lastName       String
-  phone          String?
-  address        String?
-  profilePicture String?
-  jobTitle       String?
-  department     String?
-  salary         Float?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+  email          String           @unique
+  passwordHash   String
+  role           Role             @default(EMPLOYEE)
+  isVerified     Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 
+  profile        EmployeeProfile?
   attendances    Attendance[]
   leaveRequests  LeaveRequest[]
+}
+
+model EmployeeProfile {
+  id             String     @id @default(uuid())
+  userId         String     @unique
+  user           User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Personal information
+  phone          String?
+  address        String?
+  city           String?
+  state          String?
+  dateOfBirth    DateTime?
+  gender         String?
+  profilePicture String?
+
+  // Job information
+  employeeId     String?    @unique
+  department     String?
+  designation    String?
+  joiningDate    DateTime?
+  employmentType String?
+  manager        String?
+
+  // Salary information
+  basicSalary    Float?
+  allowances     Float?
+  deductions     Float?
+
+  documents      Document[]
+
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Document {
+  id             String          @id @default(uuid())
+  profileId      String
+  profile        EmployeeProfile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  documentType   String
+  fileName       String
+  fileUrl        String
+  uploadedAt     DateTime        @default(now())
 }
 
 model Attendance {
   id        String           @id @default(uuid())
   userId    String
-  user      User             @relation(fields: [userId], references: [id])
+  user      User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   date      DateTime         @default(now())
   checkIn   DateTime?
   checkOut  DateTime?
@@ -73,13 +110,13 @@ model Attendance {
 model LeaveRequest {
   id        String       @id @default(uuid())
   userId    String
-  user      User         @relation(fields: [userId], references: [id])
+  user      User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   type      LeaveType
   startDate DateTime
   endDate   DateTime
   reason    String?
   status    LeaveStatus  @default(PENDING)
-  remarks   String?      // HR/Admin comments
+  remarks   String?      // HR comments
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 }
