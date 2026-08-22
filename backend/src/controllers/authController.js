@@ -8,7 +8,7 @@ const prisma = new PrismaClient({ adapter });
 
 exports.register = async (req, res, next) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
     
     // Check if user exists
     const existingUser = await prisma.user.findUnique({ where: { email } });
@@ -20,11 +20,6 @@ exports.register = async (req, res, next) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    // Split name into firstName and lastName for Prisma schema mapping
-    const nameParts = name.trim().split(' ');
-    const firstName = nameParts[0];
-    const lastName = nameParts.length > 1 ? nameParts.slice(1).join(' ') : '';
-
     // Create user
     const user = await prisma.user.create({
       data: {
@@ -32,13 +27,21 @@ exports.register = async (req, res, next) => {
         lastName,
         email,
         passwordHash,
-        role
+        role,
+        profile: {
+          create: {}
+        }
       }
+    });
+
+    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, {
+      expiresIn: process.env.JWT_EXPIRES_IN || '7d'
     });
 
     res.status(201).json({
       success: true,
       message: 'User registered successfully',
+      token,
       user: {
         id: user.id,
         name: `${user.firstName} ${user.lastName}`.trim(),
