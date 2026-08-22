@@ -76,10 +76,14 @@ function EmployeeProfile() {
           </div>
 
           {/* Leave - not created yet */}
-          <div className="menu-item">
-            <CalendarDays size={18} />
-            <span>Leave</span>
-          </div>
+              {/* Leave */}
+              <div
+                className="menu-item"
+                onClick={() => navigate("/profile/leave")}
+              >
+                <CalendarDays size={18} />
+                <span>Leave</span>
+              </div>
 
           {/* Attendance - not created yet */}
           <div className="menu-item">

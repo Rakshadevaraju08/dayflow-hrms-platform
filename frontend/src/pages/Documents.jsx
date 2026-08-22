@@ -235,10 +235,14 @@ function Documents() {
 
 
           {/* Leave */}
-          <div className="documents-menu-item">
+          {/* Leave */}
+            <div
+            className="menu-item"
+            onClick={() => navigate("/profile/leave")}
+            >
             <CalendarDays size={18} />
             <span>Leave</span>
-          </div>
+            </div>
 
 
           {/* Attendance */}

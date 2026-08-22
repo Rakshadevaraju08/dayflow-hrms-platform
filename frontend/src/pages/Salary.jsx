@@ -74,10 +74,13 @@ function Salary() {
           </div>
 
           {/* Leave - route not created yet */}
-          <div className="salary-menu-item">
-            <CalendarDays size={17} />
-            <span>Leave</span>
-          </div>
+                           <div
+                           className="menu-item"
+                           onClick={() => navigate("/profile/leave")}
+                           >
+                           <CalendarDays size={18} />
+                           <span>Leave</span>
+                           </div>
 
           {/* Attendance - route not created yet */}
           <div className="salary-menu-item">

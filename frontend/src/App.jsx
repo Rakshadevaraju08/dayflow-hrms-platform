@@ -12,6 +12,7 @@ import PersonalJobDetails from "./pages/PersonalJobDetails";
 import Salary from "./pages/Salary";
 import Documents from "./pages/Documents";
 import ProfilePicture from "./pages/ProfilePicture";
+import Leave from "./pages/Leave";
 
 function App() {
   return (
@@ -52,6 +53,12 @@ function App() {
         <Route
           path="/profile/picture"
           element={<ProfilePicture />}
+        />
+
+        {/* ================= LEAVE ================= */}
+        <Route
+          path="/profile/leave"
+          element={<Leave />}
         />
 
         {/* ================= DEFAULT ================= */}
