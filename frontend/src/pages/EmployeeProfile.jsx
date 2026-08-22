@@ -17,8 +17,11 @@ import {
 } from "lucide-react";
 
 import "./EmployeeProfile.css";
+import { useNavigate } from "react-router-dom";
 
 function EmployeeProfile() {
+  const navigate = useNavigate();
+
   return (
     <div className="employee-page">
 
@@ -36,47 +39,83 @@ function EmployeeProfile() {
         {/* Menu */}
         <nav className="sidebar-menu">
 
-          <div className="menu-item">
+          {/* Dashboard */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile")}
+          >
             <Grid2X2 size={22} />
             <span>Dashboard</span>
           </div>
 
-          <div className="menu-item active">
+          {/* Profile */}
+          <div
+            className="menu-item active"
+            onClick={() => navigate("/profile")}
+          >
             <UserRound size={22} />
             <span>Profile</span>
           </div>
 
-          <div className="menu-item">
+          {/* My Documents */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/documents")}
+          >
             <FileText size={22} />
             <span>My Documents</span>
           </div>
 
-          <div className="menu-item">
+          {/* Salary */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/salary")}
+          >
             <WalletCards size={22} />
             <span>Salary</span>
           </div>
 
-          <div className="menu-item">
+          {/* Leave */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/leave")}
+          >
             <CalendarDays size={22} />
             <span>Leave</span>
           </div>
 
-          <div className="menu-item">
+          {/* Attendance */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/attendance")}
+          >
             <CalendarDays size={22} />
             <span>Attendance</span>
           </div>
 
-          <div className="menu-item">
+          {/* Performance */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/performance")}
+          >
             <ChartNoAxesCombined size={22} />
             <span>Performance</span>
           </div>
 
-          <div className="menu-item">
+          {/* Training */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/training")}
+          >
             <GraduationCap size={22} />
             <span>Training</span>
           </div>
 
-          <div className="menu-item">
+          {/* Help & Support */}
+          <div
+            className="menu-item"
+            onClick={() => navigate("/profile/help")}
+          >
             <Headphones size={22} />
             <span>Help & Support</span>
           </div>
@@ -93,7 +132,7 @@ function EmployeeProfile() {
 
       </aside>
 
-      {/* ================= MAIN ================= */}
+      {/* ================= MAIN CONTENT ================= */}
       <main className="main-content">
 
         {/* Header */}
@@ -109,7 +148,11 @@ function EmployeeProfile() {
             </div>
           </div>
 
-          <button className="edit-button">
+          {/* Edit Profile Button */}
+          <button
+            className="edit-button"
+            onClick={() => navigate("/profile/edit")}
+          >
             <Pencil size={18} />
             <span>Edit Profile</span>
           </button>
@@ -217,7 +260,11 @@ function EmployeeProfile() {
         <div className="bottom-cards">
 
           {/* Job Details */}
-          <div className="info-card">
+          <div
+            className="info-card"
+            onClick={() => navigate("/profile/details")}
+            style={{ cursor: "pointer" }}
+          >
 
             <div className="card-title">
 
