@@ -5,15 +5,51 @@ import {
 import { Card, CardContent } from '../../components/ui/Card';
 import { Button } from '../../components/ui/Button';
 
+const PREFERENCES_KEY = 'dayflow_notification_preferences';
+const DEFAULT_PREFERENCES = {
+  leaveApprovals: true,
+  attendanceReminders: true,
+  payrollUpdates: true,
+  companyAnnouncements: false,
+};
+
 export function Settings() {
   const [activeTab, setActiveTab] = useState('profile');
   const [theme, setTheme] = useState('light');
+  const [preferences, setPreferences] = useState(() => {
+    try {
+      return {
+        ...DEFAULT_PREFERENCES,
+        ...JSON.parse(localStorage.getItem(PREFERENCES_KEY) || '{}'),
+      };
+    } catch {
+      return DEFAULT_PREFERENCES;
+    }
+  });
+  const [preferencesSaved, setPreferencesSaved] = useState(false);
   
   const TABS = [
     { id: 'profile', label: 'Profile Settings', icon: User },
     { id: 'notifications', label: 'Notification Preferences', icon: Bell },
     { id: 'appearance', label: 'Appearance', icon: Palette },
   ];
+
+  const notificationPreferences = [
+    { key: 'leaveApprovals', title: 'Leave Approvals', desc: 'Get notified when your leave is approved or rejected.' },
+    { key: 'attendanceReminders', title: 'Attendance Reminders', desc: 'Daily reminders to check in and check out.' },
+    { key: 'payrollUpdates', title: 'Payroll Updates', desc: 'Alerts when new salary slips are generated.' },
+    { key: 'companyAnnouncements', title: 'Company Announcements', desc: 'Important news from HR.' },
+  ];
+
+  const handlePreferenceChange = (key) => {
+    setPreferences((current) => ({ ...current, [key]: !current[key] }));
+    setPreferencesSaved(false);
+  };
+
+  const savePreferences = () => {
+    localStorage.setItem(PREFERENCES_KEY, JSON.stringify(preferences));
+    setPreferencesSaved(true);
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500 pb-12">
@@ -80,19 +116,19 @@ export function Settings() {
                   <h2 className="text-xl font-bold text-surface-900 mb-6">Notification Preferences</h2>
                   
                   <div className="space-y-4">
-                    {[
-                      { title: 'Leave Approvals', desc: 'Get notified when your leave is approved or rejected.' },
-                      { title: 'Attendance Reminders', desc: 'Daily reminders to check in and check out.' },
-                      { title: 'Payroll Updates', desc: 'Alerts when new salary slips are generated.' },
-                      { title: 'Company Announcements', desc: 'Important news from HR.' }
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-center justify-between p-4 border border-surface-100 rounded-xl hover:border-brand-200 transition-colors">
+                    {notificationPreferences.map((item) => (
+                      <div key={item.key} className="flex items-center justify-between p-4 border border-surface-100 rounded-xl hover:border-brand-200 transition-colors">
                         <div>
                           <p className="font-semibold text-surface-900">{item.title}</p>
                           <p className="text-sm text-surface-500">{item.desc}</p>
                         </div>
                         <label className="relative inline-flex items-center cursor-pointer">
-                          <input type="checkbox" className="sr-only peer" defaultChecked={i < 3} />
+                          <input
+                            type="checkbox"
+                            className="sr-only peer"
+                            checked={preferences[item.key]}
+                            onChange={() => handlePreferenceChange(item.key)}
+                          />
                           <div className="w-11 h-6 bg-surface-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-surface-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-brand-500"></div>
                         </label>
                       </div>
@@ -100,7 +136,14 @@ export function Settings() {
                   </div>
                   
                   <div className="pt-4">
-                    <Button>Save Preferences</Button>
+                    <div className="flex items-center gap-4">
+                      <Button onClick={savePreferences}>Save Preferences</Button>
+                      {preferencesSaved && (
+                        <span className="flex items-center gap-1 text-sm font-medium text-green-600" role="status">
+                          <CheckCircle2 size={16} /> Preferences saved
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
