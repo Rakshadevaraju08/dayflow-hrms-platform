@@ -11,6 +11,6 @@ router.get('/health', healthController.checkHealth);
 router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/attendance', attendanceRoutes);
-router.use('/leave', leaveRoutes);
+router.use('/leaves', leaveRoutes);
 
 module.exports = router;
