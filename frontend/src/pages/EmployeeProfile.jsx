@@ -39,10 +39,10 @@ function EmployeeProfile() {
         {/* ================= MENU ================= */}
         <nav className="sidebar-menu">
 
-          {/* Dashboard */}
+         {/* Dashboard */}
           <div
             className="menu-item"
-            onClick={() => navigate("/profile")}
+            onClick={() => navigate("/profile/dashboard")}
           >
             <Grid2X2 size={18} />
             <span>Dashboard</span>

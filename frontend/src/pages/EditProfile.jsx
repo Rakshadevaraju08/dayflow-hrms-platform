@@ -543,16 +543,13 @@ function EditProfile() {
         <nav className="edit-navigation">
 
           {/* Dashboard */}
-          <div
-            className="edit-nav-item"
-            onClick={() => navigate("/profile")}
-          >
-            <span className="edit-nav-icon">
-              <Grid2X2 size={18} />
-            </span>
-
-            <span>Dashboard</span>
-          </div>
+                    <div
+                      className="menu-item"
+                      onClick={() => navigate("/profile/dashboard")}
+                    >
+                      <Grid2X2 size={18} />
+                      <span>Dashboard</span>
+                    </div>
 
 
           {/* Profile */}

@@ -251,13 +251,13 @@ function Attendance() {
         <nav className="attendance-menu">
 
           {/* Dashboard */}
-          <div
-            className="attendance-menu-item"
-            onClick={() => navigate("/profile")}
-          >
-            <Grid2X2 size={18} />
-            <span>Dashboard</span>
-          </div>
+                    <div
+                      className="menu-item"
+                      onClick={() => navigate("/profile/dashboard")}
+                    >
+                      <Grid2X2 size={18} />
+                      <span>Dashboard</span>
+                    </div>
 
 
           {/* Profile */}

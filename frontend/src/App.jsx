@@ -6,6 +6,7 @@ import {
   Navigate,
 } from "react-router-dom";
 
+import Dashboard from "./pages/Dashboard";
 import EmployeeProfile from "./pages/EmployeeProfile";
 import EditProfile from "./pages/EditProfile";
 import PersonalJobDetails from "./pages/PersonalJobDetails";
@@ -19,6 +20,12 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+        {/* ================= EMPLOYEE DASHBOARD ================= */}
+        <Route
+          path="/profile/dashboard"
+          element={<Dashboard />}
+        />
 
         {/* ================= EMPLOYEE PROFILE ================= */}
         <Route
@@ -73,7 +80,7 @@ function App() {
           path="*"
           element={
             <Navigate
-              to="/profile"
+              to="/profile/dashboard"
               replace
             />
           }
